@@ -1,0 +1,696 @@
+/* --- 1. DESIGN TOKENS --- */
+:root {
+    --primary-red: #e41e26;
+    --midnight-navy: #002d56;
+    --accent-yellow: #ffcd00;
+    --white: #ffffff;
+    --nav-bg: rgba(0, 0, 0, 0.9);
+    --starry-bg: rgba(5, 10, 25, 0.98);
+    --smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --star-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='10' cy='10' r='0.8' fill='white' opacity='0.6'/%3E%3Ccircle cx='50' cy='30' r='0.4' fill='white' opacity='0.4'/%3E%3Ccircle cx='85' cy='15' r='0.6' fill='white' opacity='0.5'/%3E%3Ccircle cx='25' cy='60' r='0.5' fill='white' opacity='0.3'/%3E%3Ccircle cx='70' cy='80' r='0.7' fill='white' opacity='0.6'/%3E%3Ccircle cx='90' cy='50' r='0.3' fill='white' opacity='0.2'/%3E%3C/svg%3E");
+}
+
+/* --- 2. GLOBAL RESET --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #222;
+    background-color: var(--white);
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* --- 3. NAVIGATION (DESKTOP) --- */
+.nav-wrapper {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    transition: var(--smooth);
+    width: max-content;
+}
+
+nav {
+    background: var(--star-pattern), linear-gradient(90deg, rgba(20, 35, 75, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+    backdrop-filter: blur(12px);
+    border-radius: 100px;
+    box-shadow: 0 0 20px rgba(255, 205, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 205, 0, 0.2);
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    height: 60px;
+    transition: var(--smooth);
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.logo-img {
+    height: 48px;
+    width: auto;
+    margin-right: 12px;
+    filter: brightness(0) invert(1);
+    transition: 0.3s;
+}
+
+.brand-logo-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 0.99rem;
+    color: var(--white);
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.brand-container:hover .brand-logo-text {
+    color: var(--accent-yellow);
+}
+
+.nav-links-container {
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+    transition: var(--smooth);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    padding: 0;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-item:hover>a,
+.nav-item.active>a {
+    color: var(--accent-yellow);
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--star-pattern), linear-gradient(180deg, rgba(20, 35, 75, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 180px;
+}
+
+.nav-item:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown a {
+    font-size: 0.7rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 5px;
+}
+
+/* --- DESKTOP SCROLL GLIDE --- */
+.nav-wrapper.scrolled {
+    left: 30px;
+    transform: translateX(0);
+}
+
+.nav-wrapper.scrolled .nav-links-container {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.nav-wrapper.scrolled:hover .nav-links-container {
+    max-width: 1200px;
+    opacity: 1;
+    margin-left: 40px;
+    pointer-events: auto;
+    overflow: visible;
+}
+
+/* --- HERO --- */
+.hero {
+    height: 85vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 10%;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.6);
+    line-height: 1.1;
+}
+
+/* --- MARQUEE --- */
+.stats-bar {
+    background: var(--accent-yellow);
+    color: var(--midnight-navy);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 5%;
+    text-align: center;
+    border-bottom: 3px solid var(--primary-red);
+}
+
+.stat-item h2 {
+    font-size: 1.8rem;
+}
+
+.stat-item p {
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+/* --- SPORTS SLIDER (Larger Cards) --- */
+.section {
+    padding: 80px 5%;
+    position: relative;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: var(--midnight-navy);
+    margin-bottom: 40px;
+}
+
+.slider-wrapper {
+    position: relative;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.sports-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    gap: 30px;
+    padding: 20px 0;
+    scrollbar-width: none;
+}
+
+.sports-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.sport-card {
+    flex: 0 0 350px;
+    /* BUMPED UP FROM 300px */
+    scroll-snap-align: start;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eee;
+    transition: 0.4s;
+}
+
+.sport-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-red);
+    /* Adds the thin Northstars red border */
+    box-shadow: 0 15px 40px rgba(228, 30, 38, 0.15), 0 10px 30px rgba(0, 0, 0, 0.08);
+    /* Optional: subtle soft red glow */
+}
+
+.card-img {
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-content {
+    padding: 30px;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: var(--nav-bg);
+    background-image: var(--star-pattern);
+    backdrop-filter: blur(8px);
+    color: var(--white);
+    border: 1px solid rgba(255, 205, 0, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.slider-arrow.left {
+    left: -25px;
+}
+
+.slider-arrow.right {
+    right: -25px;
+}
+
+/* --- SUPPORT TILES --- */
+.join-section {
+    padding: 80px 0;
+    background-color: #f4f4f4;
+}
+
+.join-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    width: 90%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.join-card {
+    text-align: center;
+    background: var(--star-pattern), linear-gradient(135deg, rgba(20, 35, 75, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.4s;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+}
+
+.join-card h3 {
+    color: var(--accent-yellow);
+    margin-bottom: 12px;
+}
+
+.join-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-yellow);
+}
+
+.btn-signature {
+    display: inline-block;
+    width: 170px;
+    padding: 12px 0;
+    background: transparent;
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border: 2px solid var(--white);
+    transition: 0.3s ease;
+    text-align: center;
+}
+
+.btn-signature:hover {
+    background: var(--white);
+    color: var(--midnight-navy);
+}
+
+/* --- INSPIRE SECTION (Fixed Video Height) --- */
+.inspire-section {
+    background-color: var(--midnight-navy);
+    color: var(--white);
+    padding: 80px 10%;
+}
+
+.inspire-container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.inspire-video-wrapper {
+    flex: 1.2;
+    position: relative;
+    padding-bottom: 33.75%;
+    /* Forces 16:9 on wide screens */
+    height: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #000;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.inspire-video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.inspire-content {
+    flex: 1;
+}
+
+/* --- FOOTER --- */
+footer {
+    background: #050505;
+    color: white;
+    padding: 80px 10% 40px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+}
+
+.footer-grid h3 {
+    color: var(--accent-yellow);
+    margin-bottom: 25px;
+}
+
+/* Quick Links heading stays standard size & bold */
+.footer-grid h4 {
+    color: var(--white);
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* Footer links: Yellow -> White on hover, sized a smidge smaller */
+.footer-grid a,
+footer a {
+    color: var(--accent-yellow) !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.25s ease, transform 0.2s ease;
+}
+
+.footer-grid a:hover,
+footer a:hover {
+    color: var(--white) !important;
+    transform: translateX(3px);
+    /* Subtle slide forward on hover */
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #222;
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* --- DONATE BUTTON --- */
+.floating-donate {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--star-pattern), linear-gradient(135deg, rgba(228, 30, 38, 0.95) 0%, rgba(100, 5, 10, 1) 100%);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    border: 2px solid var(--accent-yellow);
+    box-shadow: 0 0 15px rgba(228, 30, 38, 0.4);
+    z-index: 1001;
+    transition: 0.3s;
+    font-size: 0.8rem;
+}
+
+/* --- MOBILE --- */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 10px;
+    margin-left: 20px;
+    z-index: 1002;
+}
+
+.mobile-menu-toggle span {
+    width: 22px;
+    height: 2px;
+    background-color: var(--accent-yellow);
+    border-radius: 2px;
+}
+
+/* --- MOBILE --- */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 10px;
+    margin-left: 20px;
+    z-index: 1002;
+}
+
+.mobile-menu-toggle span {
+    width: 22px;
+    height: 2px;
+    background-color: var(--accent-yellow);
+    border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .nav-wrapper {
+        width: 95%;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: auto;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 20px;
+        height: 50px;
+    }
+
+    .nav-links-container {
+        display: none;
+        position: absolute;
+        top: 110%;
+        left: 0;
+        width: 100%;
+        background-color: var(--starry-bg);
+        background-image: var(--star-pattern);
+        border-radius: 20px;
+        padding: 25px;
+        margin-left: 0;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .nav-links-container.active {
+        display: block;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+        /* CHANGED from flex-start */
+    }
+
+    .nav-item {
+        width: 100%;
+        display: block;
+        /* CHANGED from flex */
+    }
+
+    .nav-item>a {
+        display: block;
+        width: 100%;
+        padding: 6px 0;
+    }
+
+    .dropdown {
+        display: none;
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: rgba(255, 255, 255, 0.05);
+        border: none;
+        border-left: 3px solid var(--accent-yellow);
+        padding: 10px 0 10px 20px;
+        margin: 5px 0 10px 10px;
+        min-width: unset;
+        width: calc(100% - 10px);
+        flex-direction: column;
+        align-items: flex-start;
+        box-sizing: border-box;
+        box-shadow: none !important;
+    }
+
+    .nav-item.active .dropdown {
+        display: flex;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .dropdown a {
+        color: white !important;
+        border-bottom: none !important;
+        padding: 4px 0;
+        width: 100%;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem !important;
+    }
+
+    .inspire-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .inspire-video-wrapper {
+        width: 100%;
+        padding-bottom: 56.25%;
+    }
+
+    .sport-card {
+        flex: 0 0 100%;
+    }
+
+    .slider-arrow {
+        display: flex;
+        width: 40px;
+        height: 40px;
+    }
+
+    .slider-arrow.left {
+        left: 5px;
+    }
+
+    .slider-arrow.right {
+        right: 5px;
+    }
+}
+
+/* =============================================
+   GLOBAL LINK SYSTEM
+   ============================================= */
+
+/* 1. Base link styling (Default for LIGHT backgrounds: Red -> Dark Blue) */
+a {
+    color: var(--primary-red);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 700;
+    transition: color 0.25s ease, text-decoration-color 0.25s ease;
+}
+
+a:hover {
+    color: var(--midnight-navy);
+}
+
+/* 2. Links on DARK backgrounds (Yellow -> Pure White) */
+/* Covers heroes, dark cards, inspire section, hashtag links, and footer */
+.hero a,
+.info-card a,
+.memory-card a,
+.join-card a,
+.inspire-section a,
+.caption-box a,
+.hashtag-link,
+footer a {
+    color: var(--accent-yellow);
+}
+
+.hero a:hover,
+.info-card a:hover,
+.memory-card a:hover,
+.join-card a:hover,
+.inspire-section a:hover,
+.caption-box a:hover,
+.hashtag-link:hover,
+footer a:hover {
+    color: var(--white);
+}
+
+/* 3. Protect buttons and navigation bars from unwanted text underlines */
+[class*="btn"],
+.brand-container,
+.nav-links a,
+.dropdown a {
+    text-decoration: none !important;
+}

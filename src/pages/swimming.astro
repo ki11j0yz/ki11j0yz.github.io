@@ -1,0 +1,73 @@
+---
+// src/pages/swimming.astro
+import Layout from "../layouts/Layout.astro";
+import { getImage } from "astro:assets";
+import swimmingHero from "../assets/images/swimming_hero.jpg";
+
+const optimizedHero = await getImage({ src: swimmingHero, format: "webp" });
+---
+
+<Layout title="Swimming | Northstars Booster Club">
+    <!-- Swimming Hero -->
+    <header
+        class="hero"
+        style={`height: 60vh; background-image: linear-gradient(rgba(0, 45, 86, 0.6), rgba(0, 45, 86, 0.4)), url(${optimizedHero.src});`}
+    >
+        <h1>SWIMMING</h1>
+        <p>Developing strength, confidence, and speed in the water.</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <h2>JAN - MAY</h2>
+            <p>Season</p>
+        </div>
+        <div class="stat-item">
+            <h2>NKC POOL</h2>
+            <p>Location</p>
+        </div>
+        <div class="stat-item">
+            <h2>OPEN</h2>
+            <p>Registration</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="join-grid">
+            <div class="join-card">
+                <h3>Practice Schedule</h3>
+                <p>
+                    Tuesday Evenings: 6:00 PM - 7:30 PM<br />Saturday Mornings:
+                    9:00 AM - 10:30 AM<br /><br /><em
+                        >*Check Athlete Portal for updates.</em>
+                </p>
+            </div>
+            <div class="join-card">
+                <h3>What You Need</h3>
+                <p>
+                    Current SOMO Medical Form<br />Standard Swimwear<br
+                    />Goggles & Towel<br />A positive Northstar attitude!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section
+        class="join-section"
+        style="background-color: var(--midnight-navy); padding: 80px 0;"
+    >
+        <div style="text-align: center;">
+            <h2
+                style="color: var(--accent-yellow); font-family: 'Montserrat'; margin-bottom: 20px;"
+            >
+                READY TO MAKE A SPLASH?
+            </h2>
+            <a
+                href="https://form.jotform.com/SpecialOlympicsMO/Athleteregistration"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-signature">Register to Swim</a
+            >
+        </div>
+    </section>
+</Layout>

@@ -1,0 +1,819 @@
+---
+// src/pages/who-we-are.astro
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+// Import Candid accreditation badge
+import candidBadge from "../assets/images/candid_silver.png";
+
+// 1. Board Officers Data with Exact Hair Colors
+const officers = [
+    { name: "Heather Gambell", title: "President", emoji: "👱‍♀️" }, // Blonde
+    { name: "Tracy Ray", title: "Vice President", emoji: "👩🏻" }, // Black
+    { name: "Maggie Moran", title: "Treasurer", emoji: "👩‍🦳" }, // Gray
+    { name: "Pam Ewing", title: "Secretary", emoji: "👱‍♀️" }, // Blonde
+    { name: "Sarah Wright", title: "Immediate Past President", emoji: "👱‍♀️" }, // Blonde
+    { name: "Emma Bastarache", title: "School District Liaison", emoji: "👩" }, // Brown
+    { name: "Shawn Norris", title: "Lead Team Rep", emoji: "👱‍♀️" }, // Blonde
+    { name: "James Price", title: "IT Manager", emoji: "👨🏻‍💻" }, // Guy at computer, black hair
+];
+
+// 2. Sports-Specific Supports Data with Exact Hair Colors
+const sportsSupports = [
+    {
+        sport: "Swimming",
+        people: [{ name: "Shawn Norris", emoji: "👱‍♀️" }], // Blonde
+    },
+    {
+        sport: "Track",
+        people: [
+            { name: "Phil Hawthorne", emoji: "👨🏻" }, // Black (Man)
+            { name: "Tiffany Hawthorne", emoji: "👱‍♀️" }, // Blonde (Woman)
+        ],
+    },
+    {
+        sport: "Softball",
+        people: [
+            { name: "Jason Regan", emoji: "👨🏻" }, // Black (Man)
+            { name: "Melanie Mears", emoji: "👱‍♀️" }, // Blonde (Woman)
+        ],
+    },
+    {
+        sport: "Basketball & Pickleball",
+        people: [{ name: "Gina Verdusco", emoji: "👩🏻" }], // Black (Woman)
+    },
+    {
+        sport: "Powerlifting",
+        people: [{ name: "Pam Ewing", emoji: "👱‍♀️" }], // Blonde (Woman)
+    },
+    {
+        sport: "Bocce Ball",
+        people: [{ name: "Sadie Salvatierra", emoji: "👱‍♀️" }], // Blonde (Woman)
+    },
+    {
+        sport: "Bowling",
+        people: [
+            { name: "Tracy Ray", emoji: "👩🏻" }, // Black (Woman)
+            { name: "Heather Gambell", emoji: "👱‍♀️" }, // Blonde (Woman)
+        ],
+    },
+];
+---
+
+<Layout title="Who We Are | Northstars Booster Club">
+    <!-- 1. Deep Outerspace & Cosmic Nebula Fixed Backdrop -->
+    <div class="space-backdrop" aria-hidden="true">
+        <div class="stars-layer-small"></div>
+        <div class="stars-layer-large"></div>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="about-hero">
+        <h1>WHO WE ARE</h1>
+        <p>
+            Dedicated to fostering the abilities of individuals with
+            intellectual and developmental disabilities through organized
+            recreation and community.
+        </p>
+    </header>
+
+    <main class="about-content">
+        <div class="about-container">
+            <!-- Section 1: Mission & Overview -->
+            <section class="info-card">
+                <h2 class="card-title">Our Mission</h2>
+                <p class="card-text">
+                    The Northstars Booster Club takes pride in our continued
+                    support of Special Olympics teams in the North Kansas City
+                    School District and surrounding areas. As a nonprofit
+                    organization, we are dedicated to fostering the abilities of
+                    individuals with intellectual and developmental disabilities
+                    through organized recreation and social activities. Our
+                    mission is to provide a safe, inclusive environment where
+                    athletes thrive, develop lasting friendships, and grow
+                    alongside supportive mentors. Through these experiences, we
+                    empower our athletes and provide opportunities for personal
+                    growth.
+                </p>
+
+                <!-- Stats Bar Highlight -->
+                <div class="stats-ribbon">
+                    <div class="stat-box">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Athletes</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Sports</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">50</span>
+                        <span class="stat-label">Unified Partners</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">2013</span>
+                        <span class="stat-label">Established</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Our History & Community -->
+            <section class="info-card">
+                <h2 class="card-title">Our History & Community</h2>
+                <p class="card-text">
+                    Established in 2013 by dedicated parents, we began as a
+                    collaborative effort with the NKCSD to ensure children with
+                    intellectual disabilities could participate in team sports.
+                    While we started with swimming and bowling, our program has
+                    grown significantly. By the 2014-2015 season, we added
+                    track, softball, and basketball. Today, fueled by our
+                    athletes' desire to compete, we have expanded to include
+                    bocce ball, pickleball, and powerlifting. Our 2017
+                    registration as a nonprofit solidified this commitment. That
+                    dedication shows in our numbers: athlete participation has
+                    grown to over 200 athletes across 8 sports.
+                </p>
+                <p class="card-text">
+                    Our community is diverse, with an even 50/50 split between
+                    athletes under and over the age of 18. We are also proud to
+                    have 50 unified partners who volunteer alongside our
+                    athletes, providing vital support and camaraderie. The
+                    Northstars program goes far beyond the realm of sports; it
+                    is about community engagement. Whether through fundraising
+                    or our award-winning tradition of creative floats in the
+                    Snake Saturday Parade, we believe in the importance of
+                    giving back. From dance events to family nights, these
+                    activities strengthen our bonds and foster a true sense of
+                    belonging.
+                </p>
+            </section>
+
+            <!-- Section 3: Board of Directors -->
+            <section class="info-card">
+                <h2 class="card-title">Board of Directors</h2>
+                <p class="bod-subtitle">
+                    Dedicated leaders and sports coordinators driving our
+                    mission forward.
+                </p>
+
+                <!-- Subsection A: Officers -->
+                <div class="bod-group">
+                    <h3 class="bod-group-title">Officers</h3>
+                    <div class="bod-grid">
+                        {
+                            officers.map((officer) => (
+                                <div class="bod-person">
+                                    <div
+                                        class="bod-avatar avatar-navy"
+                                        title={officer.name}
+                                    >
+                                        <span class="avatar-emoji">
+                                            {officer.emoji}
+                                        </span>
+                                    </div>
+                                    <h4 class="bod-name">{officer.name}</h4>
+                                    <p class="bod-role">{officer.title}</p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <!-- Subsection B: Sports-Specific Supports -->
+                <div class="bod-group">
+                    <h3 class="bod-group-title">Sports-Specific Supports</h3>
+                    <div class="bod-grid">
+                        {
+                            sportsSupports.map((item) => (
+                                <div
+                                    class={
+                                        item.people.length > 1
+                                            ? "bod-pair"
+                                            : "bod-person"
+                                    }
+                                >
+                                    <div
+                                        class={
+                                            item.people.length > 1
+                                                ? "bod-pair-avatars"
+                                                : ""
+                                        }
+                                    >
+                                        {item.people.map((person) => (
+                                            <div
+                                                class={
+                                                    item.people.length > 1
+                                                        ? "bod-person-inner"
+                                                        : ""
+                                                }
+                                            >
+                                                <div
+                                                    class="bod-avatar avatar-orange"
+                                                    title={person.name}
+                                                >
+                                                    <span class="avatar-emoji">
+                                                        {person.emoji}
+                                                    </span>
+                                                </div>
+                                                <h4
+                                                    class={
+                                                        item.people.length > 1
+                                                            ? "bod-name-sm"
+                                                            : "bod-name"
+                                                    }
+                                                >
+                                                    {person.name}
+                                                </h4>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <p class="bod-sport-tag">{item.sport}</p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Accreditation & Transparency (With Linked Candid Profile) -->
+            <section class="info-card">
+                <h2 class="card-title">Transparency & Accreditation</h2>
+
+                <div class="transparency-layout">
+                    <!-- Candid Silver Seal Column -->
+                    <div class="transparency-badge-col">
+                        <a
+                            href="https://app.candid.org/profile/9610031/northstars-booster-club-81-5312175"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Candid Profile for Northstars Booster Club"
+                        >
+                            <Image
+                                src={candidBadge}
+                                alt="Candid 2026 Silver Transparency Seal"
+                                width={140}
+                                height={140}
+                                class="candid-badge-img"
+                            />
+                        </a>
+                    </div>
+
+                    <!-- Text and Action Column -->
+                    <div class="transparency-text-col">
+                        <p class="card-text">
+                            Transparency is at the heart of our partnership with
+                            you. Please visit our profile on <a
+                                href="https://app.candid.org/profile/9610031/northstars-booster-club-81-5312175"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="candid-link">Candid</a
+                            > for comprehensive updates on our growth and community
+                            initiatives. As a 501(c)(3) nonprofit, we strive to ensure
+                            every supporter feels confident in the stewardship of
+                            their contribution.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    /* =============================================
+     1. DEEP SPACE COSMOS BACKDROP
+     ============================================= */
+    .space-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        pointer-events: none;
+        background-color: #030611;
+        /* Layered Nebulae: Deep Indigo, Violet, and Electric Cyan clouds */
+        background-image:
+            radial-gradient(
+                ellipse at 80% 20%,
+                rgba(59, 130, 246, 0.28) 0%,
+                transparent 55%
+            ),
+            radial-gradient(
+                circle at 15% 45%,
+                rgba(139, 92, 246, 0.3) 0%,
+                transparent 50%
+            ),
+            radial-gradient(
+                circle at 75% 80%,
+                rgba(14, 165, 233, 0.22) 0%,
+                transparent 60%
+            ),
+            radial-gradient(
+                ellipse at 30% 90%,
+                rgba(79, 70, 229, 0.25) 0%,
+                transparent 55%
+            ),
+            linear-gradient(180deg, #020409 0%, #030713 50%, #010206 100%);
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Sharp Star Layer 1: Dense Tiny Stars */
+    .stars-layer-small {
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(1px 1px at 25px 35px, #ffffff 100%, transparent),
+            radial-gradient(1px 1px at 85px 120px, #ffffff 100%, transparent),
+            radial-gradient(
+                1.5px 1.5px at 160px 45px,
+                rgba(255, 255, 255, 0.9) 100%,
+                transparent
+            ),
+            radial-gradient(1px 1px at 240px 180px, #ffffff 100%, transparent),
+            radial-gradient(
+                1.5px 1.5px at 320px 95px,
+                #93c5fd 100%,
+                transparent
+            ),
+            radial-gradient(1px 1px at 400px 220px, #ffffff 100%, transparent),
+            radial-gradient(1px 1px at 480px 70px, #ffffff 100%, transparent),
+            radial-gradient(
+                1.5px 1.5px at 560px 150px,
+                #fed7aa 100%,
+                transparent
+            ),
+            radial-gradient(1px 1px at 640px 280px, #ffffff 100%, transparent),
+            radial-gradient(
+                1.5px 1.5px at 720px 110px,
+                #ffffff 100%,
+                transparent
+            );
+        background-size: 800px 400px;
+        opacity: 0.75;
+    }
+
+    /* Bright Star Layer 2: Star Flares and Glowing Nodes */
+    .stars-layer-large {
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(
+                2.5px 2.5px at 100px 80px,
+                #ffffff 100%,
+                transparent
+            ),
+            radial-gradient(2px 2px at 280px 300px, #bae6fd 100%, transparent),
+            radial-gradient(3px 3px at 450px 140px, #fef08a 100%, transparent),
+            radial-gradient(2px 2px at 620px 380px, #ffffff 100%, transparent),
+            radial-gradient(
+                2.5px 2.5px at 780px 220px,
+                #ffffff 100%,
+                transparent
+            );
+        background-size: 900px 600px;
+        opacity: 0.9;
+    }
+
+    /* =============================================
+     2. HERO HEADER
+     ============================================= */
+    .about-hero {
+        height: 48vh;
+        min-height: 350px;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #ffffff;
+        padding: 0 10%;
+    }
+
+    .about-hero h1 {
+        font-size: 3.5rem;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
+    }
+
+    .about-hero p {
+        font-size: 1.15rem;
+        max-width: 800px;
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        line-height: 1.6;
+    }
+
+    /* =============================================
+     3. MAIN CONTENT CONTAINER
+     ============================================= */
+    .about-content {
+        padding: 10px 20px 100px;
+    }
+
+    .about-container {
+        max-width: 1060px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+    }
+
+    /* Frosted Glass Information Cards */
+    .info-card {
+        padding: 45px;
+        background: linear-gradient(
+            135deg,
+            rgba(16, 28, 60, 0.7) 0%,
+            rgba(8, 14, 32, 0.88) 100%
+        );
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        transition:
+            transform 0.3s ease,
+            border-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .info-card:hover {
+        border-color: var(--accent-yellow);
+        box-shadow:
+            0 18px 50px rgba(0, 0, 0, 0.8),
+            0 0 22px rgba(255, 205, 0, 0.22);
+    }
+
+    .card-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding-bottom: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    .card-text {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+        margin-bottom: 16px;
+    }
+
+    .card-text:last-of-type {
+        margin-bottom: 0;
+    }
+
+    /* Text Link for Candid */
+    .candid-link {
+        color: var(--accent-yellow);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        font-weight: 700;
+        transition: color 0.2s ease;
+    }
+
+    .candid-link:hover {
+        color: #ffffff;
+    }
+
+    /* Stats Ribbon */
+    .stats-ribbon {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-box {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 205, 0, 0.25);
+        border-radius: 16px;
+        padding: 16px 10px;
+    }
+
+    .stat-number {
+        display: block;
+        font-family: "Montserrat", sans-serif;
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--accent-yellow);
+        text-shadow: 0 0 12px rgba(255, 205, 0, 0.4);
+        line-height: 1.1;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #ffffff;
+        letter-spacing: 0.08em;
+        margin-top: 6px;
+    }
+
+    /* =============================================
+     4. BOARD OF DIRECTORS STYLES
+     ============================================= */
+    .bod-subtitle {
+        font-size: 1.02rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 30px;
+    }
+
+    .bod-group {
+        margin-bottom: 40px;
+    }
+
+    .bod-group:last-child {
+        margin-bottom: 10px;
+    }
+
+    .bod-group-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--accent-yellow);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 24px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(255, 205, 0, 0.3);
+        display: inline-block;
+    }
+
+    .bod-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        align-items: flex-start;
+    }
+
+    /* Individual Board Member Item */
+    .bod-person {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 105px;
+        text-align: center;
+    }
+
+    /* Circular Avatar Badges */
+    .bod-avatar {
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        transition:
+            transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+            box-shadow 0.3s ease,
+            border-color 0.3s ease;
+        cursor: default;
+    }
+
+    .bod-avatar:hover {
+        transform: translateY(-6px) scale(1.08);
+    }
+
+    /* Officers: Deep Navy with Gold Rim */
+    .avatar-navy {
+        background: radial-gradient(
+            circle at 35% 30%,
+            #173868 0%,
+            #061122 100%
+        );
+        border: 2px solid rgba(255, 205, 0, 0.5);
+        box-shadow:
+            0 8px 20px rgba(0, 0, 0, 0.6),
+            inset 0 -4px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .avatar-navy:hover {
+        border-color: var(--accent-yellow);
+        box-shadow: 0 10px 25px rgba(255, 205, 0, 0.45);
+    }
+
+    /* Sports Supports: Warm Amber Sunset with Glow */
+    .avatar-orange {
+        background: radial-gradient(
+            circle at 35% 30%,
+            rgba(235, 120, 25, 0.5) 0%,
+            rgba(100, 30, 5, 0.7) 85%
+        );
+        border: 2px solid rgba(232, 119, 34, 0.75);
+        box-shadow:
+            0 8px 20px rgba(0, 0, 0, 0.6),
+            inset 0 -4px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .avatar-orange:hover {
+        border-color: var(--accent-yellow);
+        box-shadow: 0 10px 25px rgba(232, 119, 34, 0.6);
+    }
+
+    /* Emoji Sizing & Presentation */
+    .avatar-emoji {
+        font-family:
+            "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+            sans-serif;
+        font-size: 38px;
+        line-height: 1;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+        user-select: none;
+        display: inline-block;
+    }
+
+    .bod-name {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 4px;
+        line-height: 1.25;
+    }
+
+    .bod-role {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.25;
+    }
+
+    .bod-sport-tag {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--accent-yellow);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        line-height: 1.25;
+    }
+
+    /* Pairs (Track, Softball, Bowling) */
+    .bod-pair {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.28);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 12px 14px 10px;
+    }
+
+    .bod-pair-avatars {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 6px;
+    }
+
+    .bod-person-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80px;
+        text-align: center;
+    }
+
+    .bod-person-inner .bod-avatar {
+        width: 66px;
+        height: 66px;
+    }
+
+    .bod-person-inner .avatar-emoji {
+        font-size: 32px;
+    }
+
+    .bod-name-sm {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.2;
+    }
+
+    /* =============================================
+     5. ACCREDITATION SECTION (SIDE-BY-SIDE)
+     ============================================= */
+    .transparency-layout {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+        margin-top: 10px;
+    }
+
+    .transparency-badge-col {
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .candid-badge-img {
+        width: 140px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        display: block;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .candid-badge-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(255, 205, 0, 0.3);
+    }
+
+    .transparency-text-col {
+        flex: 1;
+    }
+
+    .transparency-action {
+        margin-top: 20px;
+    }
+
+    .transparency-btn {
+        display: inline-block;
+        background-image:
+            var(--star-pattern),
+            linear-gradient(
+                135deg,
+                rgba(20, 35, 75, 0.95) 0%,
+                rgba(0, 0, 0, 0.98) 100%
+            );
+        background-color: var(--midnight-navy);
+        color: var(--white);
+        font-family: "Montserrat", sans-serif;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 50px;
+        padding: 12px 28px;
+        border: 2px solid var(--accent-yellow);
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.4),
+            0 0 12px rgba(255, 205, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .transparency-btn:hover {
+        background-image: none;
+        background-color: var(--accent-yellow);
+        color: var(--midnight-navy);
+        border-color: var(--accent-yellow);
+        box-shadow: 0 0 25px rgba(255, 205, 0, 0.6);
+        transform: translateY(-2px);
+    }
+
+    /* =============================================
+     6. RESPONSIVE MOBILE
+     ============================================= */
+    @media (max-width: 768px) {
+        .about-hero h1 {
+            font-size: 2.3rem;
+        }
+
+        .info-card {
+            padding: 24px;
+        }
+
+        .bod-grid {
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .bod-person {
+            width: 95px;
+        }
+
+        .bod-avatar {
+            width: 66px;
+            height: 66px;
+        }
+
+        .avatar-emoji {
+            font-size: 30px;
+        }
+
+        .transparency-layout {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .transparency-action {
+            text-align: center;
+        }
+    }
+</style>

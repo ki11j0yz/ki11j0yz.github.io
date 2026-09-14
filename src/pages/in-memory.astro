@@ -1,0 +1,345 @@
+---
+// src/pages/in-memory.astro
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+// 1. Import all 4 memorial photos from src/assets/images/
+import larryWoodImg from '../assets/images/larry_wood.jpg';
+import alexEstebanImg from '../assets/images/alex_esteban.jpg';
+import janeNortonImg from '../assets/images/jane_norton.jpg';
+import charlesBrittainImg from '../assets/images/charles_brittain.jpg';
+
+// 2. Memorial honorees data
+const memorials = [
+  {
+    name: "Larry Wood",
+    reverse: false,
+    image: larryWoodImg,
+    bio: [
+      "On Sunday, March 14, 2021, Larry Alan “LWood” Wood, loving husband, father and grandfather, passed away at the age of 61.  LWood started his career in commercial HVAC in 1978 and continued until his much-anticipated retirement in June 2020. He made countless friends through his work at A.B. May, O’Dell, and the Park Hill School District. LWood held many titles – son, brother, husband, father, uncle, cousin, beloved friend, and, perhaps most importantly, Grampa. He’d travel anywhere, but said that all roads lead to Hanalei. Kauai, his happy place and where his ashes will come to rest. You’d be hard pressed to drive through the Kansas City Northland and see a building he couldn’t have pointed at and said “I’ve been on that roof…”..",
+      "He was an avid Chiefs fan and regular Lot D tailgater for over a decade. Grill master extraordinaire, he relied on a tried & true timing method that required only a watch, a pen and his trusty yellow legal pad. LWood is survived by his wife, Liz Young, brother Dave (Lisa) Wood, daughter Andrea (Patrick) Short of Marietta, GA, son Justin (Megan) Wood of Kauai, HI, sister Michelle Campbell, countless friends, a slew of “honorary” brothers, sisters, sons, daughters, nieces and nephews, and his beloved grandbabies, Evelyn & Molly Short (Marietta, GA) and Macsen & Maizie Wood (Kauai, HI).",
+      "Larry Wood was a giver, a doer and a lover, through and through. To have met him was to have been on the receiving end of some facet of his generosity. In lieu of flowers, the family asks that you pay it forward. Tip EXTRA big, buy the next Starbucks order (or 2, or 10…), send flowers to someone who needs to know how loved they are."
+    ],
+    cheddarUpUrl: "https://my.cheddarup.com/c/annual-family-booster-club-membership-58325/items",
+  },
+  {
+    name: 'Alex Esteban',
+    reverse: true,
+    image: alexEstebanImg,
+    bio: "Alexander Cruz Esteban, 15, gained his Angel’s wings on Tuesday, February 16, 2021 while he slept in his home. Alex was a 9th Grader at Staley High School where he loved attending classes. His favorite class was PE where he would get a chuckle as to which girls wou ld push him around in his wheelchair. He also loved music and he especially loved  to dance. Alex was very sociable. He was involved with Cub Scouts, YMCA Challenger program, Special Olympics Northstars and, most recently, he attended Adaptive Dance Classes at YOU Dance Fitness.  Over the years, Alex attended many events sponsored by the Down Syndrome Guild of Greater Kansas City. Every year ​he raised money for the annual Step Up for Down Syndrome Walk under his team name, He has touched so many lives in his short 15 years. Alex showed love, kindness and gave his all in everything he did. He lived life to the fullest and gave the best hugs. Alex will be greatly missed by all who knew him.",
+    cheddarUpUrl: 'https://my.cheddarup.com/c/annual-family-booster-club-membership-58325/items',
+  },
+  {
+    name: 'Jane Norton',
+    reverse: false,
+    image: janeNortonImg,
+    bio: [
+      "The Northstars Booster Club lost one of our biggest cheerleaders on Tuesday, November 3, 2020.",
+      "Jane Norton, Coach Pam Rohlfing's mom, Steve's mother-in-law and aka Grandma Jane, was part of the Northstars fan club from the very beginning. While small in stature, she was big on sharing the love. She loved our athletes and she loved being part of her daughter and son-in-law's activities. What they loved....she loved too!",
+      "Grandma Jane, we will miss your smile, your laugh, your sense of humor, seeing you at our events and just knowing you're cheering for us. Our hearts are so sad for this indescribable loss for Pam and Steve."
+    ],
+    cheddarUpUrl: 'https://my.cheddarup.com/c/annual-family-booster-club-membership-58325/items',
+  },
+  {
+    name: 'Charles Brittain',
+    reverse: true,
+    image: charlesBrittainImg,
+    bio: [
+      "The Northstars Booster Club family will never be the same. Our hearts are heavy with the news of Charles' passing on Sunday, March 1, 2020.",
+      "Charles was one of our founding board members, an unwavering supporter of Northstars and Special Olympics, candid contributor of ideas, and ever-present cheerleader for his kids, Danan and Megan Hensley. Charles rarely missed an opportunity to cheer for his kids to give their best and he also cheered for their friends and fellow athletes. From basketball to track to softball to bowling to swimming, Charles (and his wife Erica) have always been there at practices and tournaments.",
+      "Thank you Charles for leaving your mark on Northstars Booster Club and our hearts! We miss you already!"
+    ],
+    cheddarUpUrl: 'https://my.cheddarup.com/c/annual-family-booster-club-membership-58325/items',
+  },
+];
+---
+
+<Layout title="In Memory | Northstars Booster Club">
+  <!-- 1. Truly Static, Seamless Full-Screen Background -->
+  <div class="fixed-backdrop" aria-hidden="true"></div>
+
+  <!-- Hero Header -->
+  <header class="memory-hero">
+    <h1>IN LOVING MEMORY</h1>
+    <p>Always in our hearts, these athletes, volunteers, and booster club members touched so many lives.</p>
+  </header>
+
+  <!-- Memorial Cards Section -->
+  <section class="memory-section">
+    <div class="memory-container">
+      {memorials.map((memorial) => (
+        <div class={`memory-card ${memorial.reverse ? 'reverse' : ''}`}>
+          
+          <!-- Image Column -->
+          <div class="memory-image-col">
+            <Image 
+              src={memorial.image} 
+              alt={`In Memory of ${memorial.name}`} 
+              width={350}
+              height={320}
+              class="memorial-photo"
+            />
+          </div>
+
+          <!-- Text Column -->
+          <div class="memory-text-col">
+            <h2 class="memory-name">{memorial.name}</h2>
+            
+            <div class="memory-bio-wrapper">
+              {Array.isArray(memorial.bio) ? (
+                memorial.bio.map((paragraph) => (
+                  <p class="memory-bio">{paragraph}</p>
+                ))
+              ) : (
+                <p class="memory-bio">{memorial.bio}</p>
+              )}
+            </div>
+
+            {memorial.cheddarUpUrl && (
+              <a 
+                href={memorial.cheddarUpUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="memory-btn"
+              >
+                In Memory of {memorial.name}
+              </a>
+            )}
+          </div>
+
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* --- 1. FIXED, SEAMLESS OBSIDIAN BACKDROP --- */
+  .fixed-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #080d16;
+    background-image: 
+      radial-gradient(ellipse at 50% 15%, rgba(0, 45, 86, 0.45) 0%, transparent 65%),
+      radial-gradient(circle at 85% 75%, rgba(15, 30, 60, 0.35) 0%, transparent 50%),
+      radial-gradient(circle at 15% 85%, rgba(20, 35, 75, 0.3) 0%, transparent 50%),
+      linear-gradient(180deg, #0a111c 0%, #05080e 100%);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* --- 2. HERO HEADER --- */
+  .memory-hero {
+    height: 48vh;
+    min-height: 350px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 0 10%;
+    position: relative;
+  }
+
+  .memory-hero h1 {
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+  }
+
+  .memory-hero p {
+    font-size: 1.15rem;
+    max-width: 750px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  }
+
+  /* --- 3. MEMORIAL CONTENT SECTION --- */
+  .memory-section {
+    background: transparent;
+    padding: 20px 20px 100px;
+    min-height: 60vh;
+    position: relative;
+  }
+
+  .memory-container {
+    max-width: 1060px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  /* Frosted Glass Memorial Card (Desktop: side-by-side row) */
+  .memory-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    padding: 35px;
+    background: linear-gradient(135deg, rgba(20, 35, 75, 0.65) 0%, rgba(10, 18, 38, 0.85) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Yellow Hover Border like Homepage */
+  .memory-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-yellow);
+    box-shadow: 0 14px 45px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 205, 0, 0.25);
+  }
+
+  /* Reverse Card for Alex & Charles (Image on right, text on left) */
+  .memory-card.reverse {
+    flex-direction: row-reverse;
+  }
+
+  /* Image Column */
+  .memory-image-col {
+    flex: 0 0 32%;
+    max-width: 32%;
+  }
+
+  .memorial-photo {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Text Column */
+  .memory-text-col {
+    flex: 1;
+    color: #ffffff;
+    text-align: left;
+  }
+
+  .memory-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 12px;
+    text-align: left;
+  }
+
+  .memory-bio-wrapper {
+    margin-bottom: 24px;
+  }
+
+  .memory-bio {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .memory-bio:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Starry Night Theme Button */
+  .memory-btn {
+    display: block;
+    width: fit-content;
+    background-image: var(--star-pattern), linear-gradient(135deg, rgba(20, 35, 75, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+    background-color: var(--midnight-navy);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 10px 22px;
+    border: 2px solid var(--accent-yellow);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 205, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  /* Larry Wood & Jane Norton (Normal Cards): Align button to the RIGHT */
+  .memory-card:not(.reverse) .memory-btn {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  /* Alex Esteban & Charles Brittain (Reverse Cards): Align button to the LEFT */
+  .memory-card.reverse .memory-btn {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .memory-btn:hover {
+    background-image: none;
+    background-color: var(--accent-yellow);
+    color: var(--midnight-navy);
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 25px rgba(255, 205, 0, 0.6);
+    transform: translateY(-2px);
+  }
+
+  /* --- MOBILE SCREENS ONLY (<= 768px) --- */
+  @media (max-width: 768px) {
+    .memory-hero h1 {
+      font-size: 2.3rem;
+    }
+
+    .memory-card,
+    .memory-card.reverse {
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px;
+    }
+
+    .memory-image-col {
+      flex: 1 1 100%;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .memorial-photo {
+      height: 250px;
+    }
+
+    .memory-name {
+      font-size: 1.6rem;
+      text-align: center;
+    }
+
+    .memory-bio {
+      text-align: center;
+    }
+
+    .memory-text-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .memory-card:not(.reverse) .memory-btn,
+    .memory-card.reverse .memory-btn {
+      margin: 0 auto;
+    }
+  }
+</style>

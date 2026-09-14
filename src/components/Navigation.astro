@@ -1,0 +1,71 @@
+---
+// src/components/Navigation.astro
+import { Image } from "astro:assets";
+import logoImg from "../assets/images/logo.png";
+---
+
+<div class="nav-wrapper" id="navWrapper">
+    <nav>
+        <a href="/" class="brand-container">
+            <Image
+                src={logoImg}
+                alt="Northstars Booster Club Logo"
+                class="logo-img"
+            />
+            <div class="brand-logo-text">NORTHSTARS BOOSTER CLUB</div>
+        </a>
+        <div class="mobile-menu-toggle" id="menuToggle">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links-container">
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="/#sports">Our Sports</a>
+                    <div class="dropdown">
+                        <a href="/swimming">Swimming</a>
+                        <a href="#">Track</a>
+                        <a href="#">Softball</a>
+                        <a href="#">Bocce Ball</a>
+                        <a href="#">Bowling</a>
+                        <a href="#">Basketball</a>
+                        <a href="#">Pickleball</a>
+                        <a href="#">Powerlifting</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="/#involved">Get Involved</a>
+                    <div class="dropdown">
+                        <a
+                            href="https://form.jotform.com/SpecialOlympicsMO/Athleteregistration"
+                            target="_blank"
+                            rel="noopener noreferrer">Become An Athlete</a
+                        >
+                        <a href="/volunteer">Volunteer</a>
+                        <a href="/sponsor">Sponsor Northstars</a>
+                        <a
+                            href="https://my.cheddarup.com/c/annual-family-booster-club-membership-58325/items"
+                            target="_blank"
+                            rel="noopener noreferrer">Join The Club</a
+                        >
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="/who-we-are">Who We Are</a>
+                    <div class="dropdown">
+                        <a href="/who-we-are">About Us</a>
+                        <a href="/sponsors">Our Sponsors</a>
+                        <a href="/in-memory">In Memory</a>
+                        <a href="/connect-with-us">Connect With Us</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#portal">Athlete Portal</a>
+                    <div class="dropdown">
+                        <a href="#">Athlete Login</a>
+                        <a href="#">Coach Portal</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

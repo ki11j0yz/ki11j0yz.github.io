@@ -1,0 +1,645 @@
+---
+// src/pages/connect-with-us.astro
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Connect With Us | Northstars Booster Club">
+    <!-- 1. Deep Outerspace & Cosmic Nebula Fixed Backdrop -->
+    <div class="space-backdrop" aria-hidden="true">
+        <div class="stars-layer-small"></div>
+        <div class="stars-layer-large"></div>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="connect-hero">
+        <h1>CONNECT WITH US</h1>
+        <p>
+            We’d love to hear from you. Reach out through our community channels
+            or send us a direct message below.
+        </p>
+    </header>
+
+    <main class="connect-content">
+        <div class="connect-container">
+            <!-- Section 1: Get In Touch & Big Social Hub -->
+            <section class="info-card touch-card">
+                <h2 class="card-title">Get In Touch</h2>
+                <p class="card-text">
+                    Connect with Special Olympics Missouri Staff here: <a
+                        href="https://somo.org/"
+                        target="_blank"
+                        rel="noopener noreferrer">somo.org/</a
+                    >.
+                </p>
+                <p class="card-text">
+                    Click below to see our Facebook and Twitter feed or send us
+                    an email!
+                </p>
+
+                <!-- Big, High-Impact Social Channels -->
+                <div class="big-social-grid">
+                    <!-- Facebook -->
+                    <a
+                        href="https://www.facebook.com/NorthstarsBoosterClub"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="big-social-badge fb-badge"
+                        aria-label="Northstars on Facebook"
+                    >
+                        <div class="icon-circle">
+                            <svg viewBox="0 0 24 24" class="social-svg">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </div>
+                        <span class="social-label">Facebook</span>
+                        <span class="social-sub">Follow our feed</span>
+                    </a>
+
+                    <!-- X / Twitter -->
+                    <a
+                        href="https://twitter.com/NorthstarsBC"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="big-social-badge x-badge"
+                        aria-label="Northstars on X"
+                    >
+                        <div class="icon-circle">
+                            <svg viewBox="0 0 24 24" class="social-svg">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.849L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </div>
+                        <span class="social-label">X / Twitter</span>
+                        <span class="social-sub">Live updates</span>
+                    </a>
+
+                    <!-- Email -->
+                    <a
+                        href="mailto:northstarsbooster@gmail.com"
+                        class="big-social-badge email-badge"
+                        aria-label="Email Northstars Booster Club"
+                    >
+                        <div class="icon-circle">
+                            <svg viewBox="0 0 24 24" class="social-svg">
+                                <path
+                                    d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </div>
+                        <span class="social-label">Email Us</span>
+                        <span class="social-sub">Direct inquiry</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Section 2: Please Contact Me Form -->
+            <section class="info-card form-card">
+                <h2 class="card-title">Please Contact Me</h2>
+                <p class="form-intro">
+                    Have a question? Want to give some feedback? Just fill out
+                    this form and we will contact you!
+                </p>
+                <p class="required-notice">* Indicates required field</p>
+
+                <form
+                    class="contact-form"
+                    onsubmit="event.preventDefault(); alert('Thank you! Your message has been received.');"
+                >
+                    <!-- Name Row (First / Last) -->
+                    <div class="form-group">
+                        <label class="field-label"
+                            >Name <span class="req-star">*</span></label
+                        >
+                        <div class="name-grid">
+                            <div class="input-sub">
+                                <input
+                                    type="text"
+                                    name="firstName"
+                                    required
+                                    placeholder="First Name"
+                                    class="form-control"
+                                />
+                            </div>
+                            <div class="input-sub">
+                                <input
+                                    type="text"
+                                    name="lastName"
+                                    required
+                                    placeholder="Last Name"
+                                    class="form-control"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="email" class="field-label"
+                            >Email <span class="req-star">*</span></label
+                        >
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            placeholder="you@example.com"
+                            class="form-control"
+                        />
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div class="form-group">
+                        <label for="phone" class="field-label"
+                            >Phone Number <span class="req-star">*</span></label
+                        >
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            required
+                            placeholder="(816) 000-0000"
+                            class="form-control"
+                        />
+                    </div>
+
+                    <!-- Question or Comment -->
+                    <div class="form-group">
+                        <label for="message" class="field-label"
+                            >Question or Comment <span class="req-star">*</span
+                            ></label
+                        >
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            required
+                            placeholder="How can we help you?"
+                            class="form-control"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-submit-wrap">
+                        <button type="submit" class="submit-btn">
+                            Submit Message
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    /* =============================================
+     1. DEEP SPACE COSMOS BACKDROP
+     ============================================= */
+    .space-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        pointer-events: none;
+        background-color: #030611;
+        /* Layered Nebulae: Deep Indigo, Violet, and Electric Cyan clouds */
+        background-image:
+            radial-gradient(
+                ellipse at 80% 20%,
+                rgba(59, 130, 246, 0.28) 0%,
+                transparent 55%
+            ),
+            radial-gradient(
+                circle at 15% 45%,
+                rgba(139, 92, 246, 0.3) 0%,
+                transparent 50%
+            ),
+            radial-gradient(
+                circle at 75% 80%,
+                rgba(14, 165, 233, 0.22) 0%,
+                transparent 60%
+            ),
+            radial-gradient(
+                ellipse at 30% 90%,
+                rgba(79, 70, 229, 0.25) 0%,
+                transparent 55%
+            ),
+            linear-gradient(180deg, #020409 0%, #030713 50%, #010206 100%);
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Sharp Star Layer 1: Dense Tiny Stars */
+    .stars-layer-small {
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(1px 1px at 25px 35px, #ffffff 100%, transparent),
+            radial-gradient(1px 1px at 85px 120px, #ffffff 100%, transparent),
+            radial-gradient(
+                1.5px 1.5px at 160px 45px,
+                rgba(255, 255, 255, 0.9) 100%,
+                transparent
+            ),
+            radial-gradient(1px 1px at 240px 180px, #ffffff 100%, transparent),
+            radial-gradient(
+                1.5px 1.5px at 320px 95px,
+                #93c5fd 100%,
+                transparent
+            ),
+            radial-gradient(1px 1px at 400px 220px, #ffffff 100%, transparent),
+            radial-gradient(1px 1px at 480px 70px, #ffffff 100%, transparent),
+            radial-gradient(
+                1.5px 1.5px at 560px 150px,
+                #fed7aa 100%,
+                transparent
+            ),
+            radial-gradient(1px 1px at 640px 280px, #ffffff 100%, transparent),
+            radial-gradient(
+                1.5px 1.5px at 720px 110px,
+                #ffffff 100%,
+                transparent
+            );
+        background-size: 800px 400px;
+        opacity: 0.75;
+    }
+
+    /* Bright Star Layer 2: Star Flares and Glowing Nodes */
+    .stars-layer-large {
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(
+                2.5px 2.5px at 100px 80px,
+                #ffffff 100%,
+                transparent
+            ),
+            radial-gradient(2px 2px at 280px 300px, #bae6fd 100%, transparent),
+            radial-gradient(3px 3px at 450px 140px, #fef08a 100%, transparent),
+            radial-gradient(2px 2px at 620px 380px, #ffffff 100%, transparent),
+            radial-gradient(
+                2.5px 2.5px at 780px 220px,
+                #ffffff 100%,
+                transparent
+            );
+        background-size: 900px 600px;
+        opacity: 0.9;
+    }
+
+    /* =============================================
+     2. HERO HEADER
+     ============================================= */
+    .connect-hero {
+        height: 44vh;
+        min-height: 320px;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #ffffff;
+        padding: 0 10%;
+    }
+
+    .connect-hero h1 {
+        font-size: 3.5rem;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
+    }
+
+    .connect-hero p {
+        font-size: 1.15rem;
+        max-width: 750px;
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        line-height: 1.6;
+    }
+
+    /* =============================================
+     3. CONTENT LAYOUT & CARDS
+     ============================================= */
+    .connect-content {
+        padding: 10px 20px 100px;
+    }
+
+    .connect-container {
+        max-width: 980px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .info-card {
+        padding: 45px;
+        background: linear-gradient(
+            135deg,
+            rgba(16, 28, 60, 0.7) 0%,
+            rgba(8, 14, 32, 0.88) 100%
+        );
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        transition:
+            transform 0.3s ease,
+            border-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .info-card:hover {
+        border-color: var(--accent-yellow);
+        box-shadow:
+            0 18px 50px rgba(0, 0, 0, 0.8),
+            0 0 22px rgba(255, 205, 0, 0.22);
+    }
+
+    .card-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding-bottom: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.92);
+        margin-bottom: 14px;
+    }
+
+    /* =============================================
+     4. BIG HIGH-IMPACT SOCIAL BADGES
+     ============================================= */
+    .big-social-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        margin-top: 35px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .big-social-badge {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 20px;
+        background: radial-gradient(
+            circle at 50% 30%,
+            rgba(26, 44, 88, 0.6) 0%,
+            rgba(10, 18, 40, 0.85) 100%
+        );
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        text-decoration: none !important;
+        transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Large Glowing Icon Circles */
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .social-svg {
+        width: 38px;
+        height: 38px;
+        transition: transform 0.3s ease;
+    }
+
+    /* Brand Accents */
+    .fb-badge .icon-circle {
+        background: #1877f2;
+        color: #ffffff;
+        box-shadow: 0 0 20px rgba(24, 119, 242, 0.4);
+    }
+
+    .x-badge .icon-circle {
+        background: #000000;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .email-badge .icon-circle {
+        background: linear-gradient(135deg, #e41e26 0%, #b91c1c 100%);
+        color: #ffffff;
+        box-shadow: 0 0 20px rgba(228, 30, 38, 0.4);
+    }
+
+    .social-label {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #ffffff;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 4px;
+        transition: color 0.25s ease;
+    }
+
+    .social-sub {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.65);
+    }
+
+    /* Big Badge Hover Effects */
+    .big-social-badge:hover {
+        transform: translateY(-8px) scale(1.03);
+        border-color: var(--accent-yellow);
+        box-shadow:
+            0 16px 40px rgba(0, 0, 0, 0.8),
+            0 0 25px rgba(255, 205, 0, 0.3);
+    }
+
+    .big-social-badge:hover .icon-circle {
+        transform: scale(1.1);
+    }
+
+    .big-social-badge:hover .social-label {
+        color: var(--accent-yellow);
+    }
+
+    /* =============================================
+     5. CONTACT FORM STYLES
+     ============================================= */
+    .form-intro {
+        font-size: 1.15rem;
+        color: #ffffff;
+        margin-bottom: 6px;
+    }
+
+    .required-notice {
+        font-size: 0.85rem;
+        color: var(--accent-yellow);
+        margin-bottom: 28px;
+        font-weight: 600;
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .field-label {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.03em;
+    }
+
+    .req-star {
+        color: var(--accent-yellow);
+    }
+
+    .name-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    /* Modern Glass Input Controls */
+    .form-control {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        color: #ffffff;
+        font-family: "Open Sans", sans-serif;
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: all 0.25s ease;
+        backdrop-filter: blur(8px);
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.45);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--accent-yellow);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 0 15px rgba(255, 205, 0, 0.35);
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    /* Form Submit Button */
+    .form-submit-wrap {
+        margin-top: 10px;
+    }
+
+    .submit-btn {
+        display: inline-block;
+        background-image:
+            var(--star-pattern),
+            linear-gradient(
+                135deg,
+                rgba(20, 35, 75, 0.95) 0%,
+                rgba(0, 0, 0, 0.98) 100%
+            );
+        background-color: var(--midnight-navy);
+        color: var(--white);
+        font-family: "Montserrat", sans-serif;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: 50px;
+        padding: 16px 42px;
+        border: 2px solid var(--accent-yellow);
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.4),
+            0 0 15px rgba(255, 205, 0, 0.2);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        background-image: none;
+        background-color: var(--accent-yellow);
+        color: var(--midnight-navy);
+        border-color: var(--accent-yellow);
+        box-shadow: 0 0 25px rgba(255, 205, 0, 0.7);
+        transform: translateY(-3px);
+    }
+
+    /* =============================================
+     6. RESPONSIVE MOBILE
+     ============================================= */
+    @media (max-width: 768px) {
+        .connect-hero h1 {
+            font-size: 2.4rem;
+        }
+
+        .info-card {
+            padding: 26px 20px;
+        }
+
+        .name-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .big-social-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .big-social-badge {
+            padding: 20px;
+            flex-direction: row;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .social-svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>

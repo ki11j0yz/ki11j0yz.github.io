@@ -1,0 +1,102 @@
+---
+// src/layouts/Layout.astro
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+// 1. Import ClientRouter
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <ClientRouter />
+    </head>
+
+    <body>
+        <Navigation />
+
+        <main>
+            <slot />
+        </main>
+
+        <Footer />
+
+        <script>
+            document.addEventListener("astro:page-load", () => {
+                const navWrapper = document.getElementById("navWrapper");
+                const menuToggle = document.getElementById("menuToggle");
+                const navLinksContainer = document.querySelector(
+                    ".nav-links-container",
+                );
+                const navItems = document.querySelectorAll(".nav-item");
+
+                // 1. Desktop Scroll Effect
+                window.addEventListener("scroll", function () {
+                    if (window.innerWidth > 768) {
+                        if (window.scrollY > 60) {
+                            navWrapper?.classList.add("scrolled");
+                        } else {
+                            navWrapper?.classList.remove("scrolled");
+                        }
+                    } else {
+                        navLinksContainer?.classList.remove("active");
+                    }
+                });
+
+                // 2. Mobile Hamburger Toggle
+                if (menuToggle && navLinksContainer) {
+                    menuToggle.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        navLinksContainer.classList.toggle("active");
+                        if (!navLinksContainer.classList.contains("active")) {
+                            navItems.forEach((i) =>
+                                i.classList.remove("active"),
+                            );
+                        }
+                    });
+                }
+
+                // 3. Mobile Accordion Logic
+                navItems.forEach((item) => {
+                    const parentLink = item.querySelector(":scope > a");
+                    const dropdown = item.querySelector(".dropdown");
+
+                    if (dropdown && parentLink) {
+                        parentLink.addEventListener("click", function (e) {
+                            if (window.innerWidth <= 768) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const isActive =
+                                    item.classList.contains("active");
+                                navItems.forEach((i) =>
+                                    i.classList.remove("active"),
+                                );
+                                if (!isActive) {
+                                    item.classList.add("active");
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

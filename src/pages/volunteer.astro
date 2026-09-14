@@ -1,0 +1,639 @@
+---
+// src/pages/volunteer.astro
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+// 1. Import Volunteer Photos from src/assets/images/
+import coachImg from '../assets/images/coaches.png';
+import unifiedPartnerImg from '../assets/images/unified_partner.png';
+import teamRepImg from '../assets/images/team_rep.png';
+import boosterEventsImg from '../assets/images/booster_events.png';
+
+// 2. Volunteer Roles Data with Extra Info Popups
+const roles = [
+  {
+    title: 'Coach',
+    tag: 'Athletics & Leadership',
+    image: coachImg,
+    imgPosition: 'center 20%',
+    extraInfo: 'Some coach positions paid. Experience sport and coaching methods will be taught by the head coach. Commitment is typically 2-3 months per sport including weekly practices for 1 – 1-1/2 hours plus 2-3 tournaments.',
+    description: 'You are the heart of the team! Guide our athletes through practices, teach sportsmanship and fundamentals, and celebrate their accomplishments on game day.',
+    highlights: ['Lead weekly sports practices', 'Prepare athletes for regional & state games', 'Zero professional coaching experience required!']
+  },
+  {
+    title: 'Unified Partner',
+    tag: 'Teammates On The Field',
+    image: unifiedPartnerImg,
+    imgPosition: 'center top',
+    extraInfo: 'Unified Partners in high school earn A+ hours',
+    description: 'Play right alongside our Special Olympics athletes as equal teammates in team sports like softball, basketball, bowling, track, and bocce ball.',
+    highlights: ['Compete and train as peers', 'Build genuine, lasting friendships', 'Open to youth, teens, and adults of all ages']
+  },
+  {
+    title: 'Team Representative',
+    tag: 'Coordination & Communication',
+    image: teamRepImg,
+    imgPosition: 'center top',
+    description: 'Keep the team connected! Help coaches communicate schedule updates, coordinate snacks, greet families at practice, and ensure everything runs smoothly.',
+    highlights: ['Liaison between families & coaches', 'Help manage attendance & gear', 'Great role for parents and supporters']
+  },
+  {
+    title: 'Booster Club Events',
+    tag: 'Community & Traditions',
+    image: boosterEventsImg,
+    imgPosition: 'center 12%',
+    description: 'Help bring our biggest community traditions to life! From our award-winning Snake Saturday Parade float to car washes, family picnics, and rallies.',
+    highlights: ['Event setup & fun activities', 'Fundraising and community drives', 'Flexible, single-day volunteer commitments']
+  }
+];
+---
+
+<Layout title="Volunteer | Northstars Booster Club">
+  <!-- 1. Cosmic Outerspace Fixed Backdrop -->
+  <div class="space-backdrop" aria-hidden="true">
+    <div class="stars-layer-small"></div>
+    <div class="stars-layer-large"></div>
+  </div>
+
+  <!-- Hero Header -->
+  <header class="vol-hero">
+    <h1>VOLUNTEER WITH NORTHSTARS</h1>
+    <p>You are the heart of the Northstars! Whether coaching, serving as a unified partner, or helping at community events, your dedication makes this fun possible.</p>
+  </header>
+
+  <main class="vol-content">
+    <div class="vol-container">
+
+      <!-- Section 1: 2x2 Interactive Roles Bento Grid -->
+      <section class="roles-section">
+        <h2 class="section-heading">Ways You Can Make an Impact</h2>
+        
+        <div class="roles-grid">
+          {roles.map((role) => (
+            <div class="role-card">
+              <!-- Card Image Header -->
+              <div class="role-img-wrap">
+                <Image 
+                  src={role.image} 
+                  alt={role.title} 
+                  width={600} 
+                  class="role-img" 
+                  style={`object-position: ${role.imgPosition};`}
+                />
+                <span class="role-badge">{role.tag}</span>
+
+                <!-- Hover Popup for Extra Info -->
+                {role.extraInfo && (
+                  <div class="extra-info-popup" role="tooltip">
+                    <div class="extra-info-header">
+                      <span class="info-icon">ℹ</span> Extra Info
+                    </div>
+                    <p class="extra-info-text">{role.extraInfo}</p>
+                  </div>
+                )}
+              </div>
+
+              <!-- Card Content -->
+              <div class="role-body">
+                <h3 class="role-title">{role.title}</h3>
+                <p class="role-desc">{role.description}</p>
+                
+                <ul class="role-highlights">
+                  {role.highlights.map((item) => (
+                    <li>
+                      <span class="check-icon">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Section 2: Volunteer Registration Form -->
+      <section class="form-section" id="volunteer-form">
+        <div class="form-card">
+          <h2 class="card-title">Volunteer Sign-Up</h2>
+          <p class="form-intro">Ready to join our family? Let us know what roles or sports interest you and we'll be in touch!</p>
+          <p class="required-notice">* Indicates required field</p>
+
+          <form class="vol-form">
+            <!-- Name Row -->
+            <div class="form-group">
+              <label class="field-label">Your Name <span class="req-star">*</span></label>
+              <div class="name-grid">
+                <input type="text" name="firstName" required placeholder="First Name" class="form-control" />
+                <input type="text" name="lastName" required placeholder="Last Name" class="form-control" />
+              </div>
+            </div>
+
+            <!-- Email & Phone Grid -->
+            <div class="contact-grid">
+              <div class="form-group">
+                <label for="email" class="field-label">Email Address <span class="req-star">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="you@example.com" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="phone" class="field-label">Phone Number <span class="req-star">*</span></label>
+                <input type="tel" id="phone" name="phone" required placeholder="(816) 000-0000" class="form-control" />
+              </div>
+            </div>
+
+            <!-- Role Preference -->
+            <div class="form-group">
+              <label for="rolePreference" class="field-label">Preferred Volunteer Role <span class="req-star">*</span></label>
+              <select id="rolePreference" name="rolePreference" required class="form-control select-control">
+                <option value="" disabled selected>Select a role...</option>
+                <option value="coach">Coach (Practices & Games)</option>
+                <option value="unified-partner">Unified Partner (Play on Team)</option>
+                <option value="team-rep">Team Representative (Communication)</option>
+                <option value="events">Booster Club Events & Rallies</option>
+                <option value="flexible">Wherever I am needed most!</option>
+              </select>
+            </div>
+
+            <!-- Message / Notes -->
+            <div class="form-group">
+              <label for="comments" class="field-label">Questions, Experience, or Sports of Interest</label>
+              <textarea id="comments" name="comments" rows="4" placeholder="Tell us if you have a specific sport in mind (e.g., Softball, Swimming, Basketball) or any questions..." class="form-control"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-submit-wrap">
+              <button type="submit" class="submit-btn">
+                Submit Volunteer Registration
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Handle form submission cleanly
+  const form = document.querySelector('.vol-form');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Thank you for volunteering! Our coordinator will contact you shortly.');
+  });
+</script>
+
+<style>
+  /* =============================================
+     1. COSMOS SPACE BACKDROP
+     ============================================= */
+  .space-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #030611;
+    background-image: 
+      radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.28) 0%, transparent 55%),
+      radial-gradient(circle at 15% 45%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 75% 80%, rgba(14, 165, 233, 0.22) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 90%, rgba(79, 70, 229, 0.25) 0%, transparent 55%),
+      linear-gradient(180deg, #020409 0%, #030713 50%, #010206 100%);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .stars-layer-small {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(1px 1px at 25px 35px, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 85px 120px, #ffffff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 160px 45px, rgba(255,255,255,0.9) 100%, transparent),
+      radial-gradient(1px 1px at 240px 180px, #ffffff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 320px 95px, #93c5fd 100%, transparent),
+      radial-gradient(1px 1px at 400px 220px, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 480px 70px, #ffffff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 560px 150px, #fed7aa 100%, transparent);
+    background-size: 800px 400px;
+    opacity: 0.75;
+  }
+
+  .stars-layer-large {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(2.5px 2.5px at 100px 80px, #ffffff 100%, transparent),
+      radial-gradient(2px 2px at 280px 300px, #bae6fd 100%, transparent),
+      radial-gradient(3px 3px at 450px 140px, #fef08a 100%, transparent),
+      radial-gradient(2px 2px at 620px 380px, #ffffff 100%, transparent);
+    background-size: 900px 600px;
+    opacity: 0.9;
+  }
+
+  /* =============================================
+     2. HERO HEADER
+     ============================================= */
+  .vol-hero {
+    height: 46vh;
+    min-height: 340px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 0 10%;
+  }
+
+  .vol-hero h1 {
+    font-size: 3.4rem;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
+  }
+
+  .vol-hero p {
+    font-size: 1.15rem;
+    max-width: 800px;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    line-height: 1.6;
+  }
+
+  /* =============================================
+     3. CONTENT CONTAINER & BENTO ROLES GRID
+     ============================================= */
+  .vol-content {
+    padding: 10px 20px 100px;
+  }
+
+  .vol-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .section-heading {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.85);
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+  }
+
+  /* 2x2 Grid */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  /* Role Card */
+  .role-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(16, 28, 60, 0.75) 0%, rgba(8, 14, 32, 0.9) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .role-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-yellow);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 205, 0, 0.25);
+  }
+
+  /* Image Container */
+  .role-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 330px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .role-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .role-card:hover .role-img {
+    transform: scale(1.05);
+  }
+
+  /* Floating Role Badge */
+  .role-badge {
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--accent-yellow);
+    color: var(--accent-yellow);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 6px 14px;
+    border-radius: 50px;
+    z-index: 2;
+  }
+
+  /* --- EXTRA INFO HOVER POPUP --- */
+  .extra-info-popup {
+    position: absolute;
+    inset: 16px;
+    background: rgba(6, 12, 28, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 2px solid var(--accent-yellow);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 205, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(0.97);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .role-card:hover .extra-info-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .extra-info-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--accent-yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 205, 0, 0.3);
+  }
+
+  .info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent-yellow);
+    color: var(--midnight-navy);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .extra-info-text {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    margin: 0;
+  }
+
+  /* Role Card Body */
+  .role-body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .role-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .role-desc {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 20px;
+  }
+
+  /* Highlights Checklist */
+  .role-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .role-highlights li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .check-icon {
+    color: var(--accent-yellow);
+    font-weight: 900;
+    font-size: 1rem;
+  }
+
+  /* =============================================
+     4. VOLUNTEER FORM SECTION
+     ============================================= */
+  .form-card {
+    padding: 45px;
+    background: linear-gradient(135deg, rgba(16, 28, 60, 0.75) 0%, rgba(8, 14, 32, 0.9) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  }
+
+  .card-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 14px;
+  }
+
+  .form-intro {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 6px;
+  }
+
+  .required-notice {
+    font-size: 0.85rem;
+    color: var(--accent-yellow);
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+
+  .vol-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.03em;
+  }
+
+  .req-star {
+    color: var(--accent-yellow);
+  }
+
+  .name-grid,
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Form Input Controls */
+  .form-control {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .select-control {
+    background: rgba(16, 28, 60, 0.9);
+    color: #ffffff;
+  }
+
+  .select-control option {
+    background: #0d1730;
+    color: #ffffff;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--accent-yellow);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 15px rgba(255, 205, 0, 0.35);
+  }
+
+  textarea.form-control {
+    resize: vertical;
+  }
+
+  .form-submit-wrap {
+    margin-top: 12px;
+  }
+
+  .submit-btn {
+    display: inline-block;
+    background-image: var(--star-pattern), linear-gradient(135deg, rgba(20, 35, 75, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+    background-color: var(--midnight-navy);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    padding: 16px 42px;
+    border: 2px solid var(--accent-yellow);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 205, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background-image: none;
+    background-color: var(--accent-yellow);
+    color: var(--midnight-navy);
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 25px rgba(255, 205, 0, 0.7);
+    transform: translateY(-3px);
+  }
+
+  /* =============================================
+     5. RESPONSIVE MOBILE
+     ============================================= */
+  @media (max-width: 900px) {
+    .roles-grid {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .vol-hero h1 {
+      font-size: 2.3rem;
+    }
+
+    .role-img-wrap {
+      height: 270px;
+    }
+
+    .form-card {
+      padding: 26px 20px;
+    }
+
+    .name-grid,
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .submit-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

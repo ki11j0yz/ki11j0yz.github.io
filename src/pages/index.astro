@@ -1,0 +1,189 @@
+---
+// src/pages/index.astro
+import Layout from "../layouts/Layout.astro";
+import { Image, getImage } from "astro:assets";
+
+// 1. Import Hero background and all 8 sports images from src/assets/images/
+import heroMain from "../assets/images/hero_main.jpg";
+import bowlingImg from "../assets/images/bowling_homepage.jpg";
+import basketballImg from "../assets/images/basketball_homepage.jpg";
+import swimmingImg from "../assets/images/swimming_homepage.jpg";
+import trackImg from "../assets/images/track_homepage.jpg";
+import softballImg from "../assets/images/softball_homepage.jpg";
+import bocceImg from "../assets/images/bocceball_homepage.jpg";
+import pickleballImg from "../assets/images/pickleball_homepage.jpg";
+import powerliftingImg from "../assets/images/powerlifting_homepage.jpg";
+
+// 2. Optimize the hero background image to modern WebP
+const optimizedHero = await getImage({ src: heroMain, format: "webp" });
+
+// 3. Define the sports data in one clean array
+const sports = [
+	{ name: "Bowling", season: "Sept - Nov", img: bowlingImg },
+	{ name: "Basketball", season: "Nov - Feb", img: basketballImg },
+	{ name: "Swimming", season: "Jan - May", img: swimmingImg },
+	{ name: "Track & Field", season: "Mar - May", img: trackImg },
+	{ name: "Softball", season: "Jun - Sept", img: softballImg },
+	{ name: "Bocce Ball", season: "Spring Season", img: bocceImg },
+	{ name: "Pickleball", season: "All Year", img: pickleballImg },
+	{ name: "Powerlifting", season: "Year Round", img: powerliftingImg },
+];
+---
+
+<Layout title="Northstars Booster Club | Supporting Special Olympics">
+	<!-- Hero Header with optimized background -->
+	<header
+		class="hero"
+		style={`background-image: linear-gradient(rgba(0, 45, 86, 0.55), rgba(0, 45, 86, 0.35)), url('${optimizedHero.src}');`}
+	>
+		<h1>UNVEILING POTENTIAL</h1>
+		<p>
+			Supporting North Kansas City's Special Olympics athletes through
+			competitive sports and community.
+		</p>
+	</header>
+
+	<div class="stats-bar">
+		<div class="stat-item">
+			<h2>200+</h2>
+			<p>Athletes</p>
+		</div>
+		<div class="stat-item">
+			<h2>8</h2>
+			<p>Sports</p>
+		</div>
+		<div class="stat-item">
+			<h2>50+</h2>
+			<p>Unified Partners</p>
+		</div>
+		<div class="stat-item">
+			<h2>100%</h2>
+			<p>Volunteer Run</p>
+		</div>
+	</div>
+
+	<!-- Sports Slider Section -->
+	<section class="section" id="sports">
+		<h2 class="section-title">Our Sports Programs</h2>
+		<div class="slider-wrapper">
+			<button
+				class="slider-arrow left"
+				id="prevBtn"
+				aria-label="Previous Sports">&#10094;</button
+			>
+
+			<div class="sports-slider" id="sportsSlider">
+				{
+					sports.map((sport) => (
+						<div class="sport-card">
+							<Image
+								src={sport.img}
+								alt={sport.name}
+								width={350}
+								height={220}
+								style="width: 100%; height: 220px; object-fit: cover; display: block;"
+							/>
+							<div class="card-content">
+								<h3>{sport.name}</h3>
+								<p>{sport.season}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+
+			<button
+				class="slider-arrow right"
+				id="nextBtn"
+				aria-label="Next Sports">&#10095;</button
+			>
+		</div>
+	</section>
+
+	<section class="join-section" id="involved">
+		<h2 class="section-title">Ways to Support</h2>
+		<div class="join-grid">
+			<div class="join-card">
+				<h3>Become an Athlete</h3>
+				<p>
+					Open to individuals with intellectual disabilities in the
+					NKC area.
+				</p>
+				<a
+					href="https://form.jotform.com/SpecialOlympicsMO/Athleteregistration"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn-signature">Sign Up</a
+				>
+			</div>
+			<div class="join-card">
+				<h3>Volunteer</h3>
+				<p>Help make every event a success. No experience necessary!</p>
+				<a href="#" target="_blank" class="btn-signature">Get Started</a
+				>
+			</div>
+			<div class="join-card">
+				<h3>Sponsor</h3>
+				<p>Showcase your local business and support our athletes.</p>
+				<a href="/sponsors" class="btn-signature">Learn More</a>
+			</div>
+			<div class="join-card">
+				<h3>Join the Club</h3>
+				<p>
+					Become a member to directly support our missions and events.
+				</p>
+				<a
+					href="https://my.cheddarup.com/c/annual-family-booster-club-membership-58325/items"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn-signature">Join Today</a
+				>
+			</div>
+		</div>
+	</section>
+
+	<section class="inspire-section">
+		<div class="inspire-container">
+			<div class="inspire-video-wrapper">
+				<iframe
+					src="https://www.youtube.com/embed/TNPusPOT6RI?rel=0"
+					title="Inspire"
+					allowfullscreen></iframe>
+			</div>
+			<div class="inspire-content">
+				<h2>Inspire: Northstars</h2>
+				<p>
+					Check out this video about our student-athletes getting
+					ready for state competition!
+				</p>
+				<div class="caption-box">
+					<strong>Video Caption:</strong> Some of the hardest working and
+					most dedicated student-athletes are getting ready for state competition!
+					As basketball players for NKCS Northstars practice, they <a
+						href="https://www.youtube.com/hashtag/inspire"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="hashtag-link">#iNspire</a
+					> others with their passion for sports.
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<!-- Slider JavaScript -->
+<script>
+	document.addEventListener("astro:page-load", () => {
+		const slider = document.getElementById("sportsSlider");
+		const prevBtn = document.getElementById("prevBtn");
+		const nextBtn = document.getElementById("nextBtn");
+		if (slider && prevBtn && nextBtn) {
+			nextBtn.addEventListener("click", () => {
+				slider.scrollLeft += 360;
+			});
+			prevBtn.addEventListener("click", () => {
+				slider.scrollLeft -= 360;
+			});
+		}
+	});
+</script>
