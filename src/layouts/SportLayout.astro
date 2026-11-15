@@ -1,0 +1,674 @@
+---
+// src/layouts/SportLayout.astro
+//
+// THE SHARED TEMPLATE FOR EVERY SPORT PAGE.
+// It holds the structure (hero, yellow bar, two cards, Common Questions,
+// Register card) and all of the styling. Each sport page in src/pages
+// (swimming.astro, bowling.astro, ...) only supplies its own details.
+//
+// Change the look here once and all eight sport pages follow.
+import type { ImageMetadata } from "astro";
+import { getImage, Image } from "astro:assets";
+import Layout from "./Layout.astro";
+import SpaceBackdrop from "../components/SpaceBackdrop.astro";
+import sportsYouLogo from "../assets/images/sportsyou_logo.png";
+
+// One line in the Practice Schedule card. "label" is bold, "detail" is plain.
+interface ScheduleLine {
+    label: string;
+    detail?: string;
+}
+
+// One question in the Common Questions box. Each answer is one bullet.
+// Answers may contain simple HTML such as <strong> and <a>.
+interface Faq {
+    question: string;
+    answers: string[];
+}
+
+interface Props {
+    slug: string; // the page address without the slash, e.g. "bowling"
+    name: string; // e.g. "Bowling"
+    tagline: string; // the sentence under the big title
+    hero: ImageMetadata; // the imported hero photo
+    season: string; // e.g. "Sept - Nov"
+    cost?: { value: string; label: string } | null; // third item in the yellow bar. null hides it.
+    scheduleBadge: string; // e.g. "When We Bowl"
+    schedule: ScheduleLine[];
+    scheduleNote?: string; // the words after "*Check sportsYou"
+    needsBadge?: string;
+    needs: string[]; // the What You Need list
+    whoShouldJoin?: string[]; // replaces the standard "Who should join?" bullets
+    costAnswers?: string[]; // replaces "It is always free to join this sport!"
+    extraFaqs?: Faq[]; // extra questions only this sport has
+    resourcesUrl?: string; // this sport's page on somo.org
+    registerLine: string; // e.g. "Ready to roll?"
+    registerButton: string; // e.g. "Register to Bowl"
+}
+
+const {
+    slug,
+    name,
+    tagline,
+    hero,
+    season,
+    cost = { value: "FREE", label: "Cost to Join" },
+    scheduleBadge,
+    schedule,
+    scheduleNote = "for updates.",
+    needsBadge = "Come Prepared",
+    needs,
+    whoShouldJoin = [
+        "Athletes of all skill levels are welcome!",
+        "Volunteers and Unified Partners (age peers) are welcome to join us!",
+    ],
+    costAnswers = ["It is always free to join this sport!"],
+    extraFaqs = [],
+    resourcesUrl,
+    registerLine,
+    registerButton,
+} = Astro.props;
+
+const optimizedHero = await getImage({ src: hero, format: "webp" });
+
+// Links used in more than one place. Change them here once.
+const sportsYouLoginUrl = "https://www.sportsyou.com/login/";
+const sportsYouSignupUrl = "https://sportsyou.com/signup";
+const registerUrl = "https://form.jotform.com/SpecialOlympicsMO/Athleteregistration";
+const facebookUrl = "https://www.facebook.com/northstarsboosterclub";
+const contactUrl = `/connect-with-us?sport=${slug}`;
+
+// Opens a link in a new tab (used for outside sites)
+const newTab = 'target="_blank" rel="noopener noreferrer"';
+
+// THE COMMON QUESTIONS, in the order they appear on the page.
+// Questions 1 and 3 can be changed per sport. The rest are the same everywhere.
+const faqs: Faq[] = [
+    {
+        question: "Who should join?",
+        answers: whoShouldJoin,
+    },
+    {
+        question: "How do I register?",
+        answers: [
+            `Head <a href="${registerUrl}" ${newTab}>here</a> to register your athlete!`,
+            `New and have questions first? <a href="${contactUrl}">Contact us</a> and we will help you get started.`,
+        ],
+    },
+    {
+        question: "How much does it cost?",
+        answers: [
+            ...costAnswers,
+            `We encourage every family to become a Booster Club member. The annual membership is $30. It comes with member benefits and directly supports our athletes. <a href="/join">Become a member</a>`,
+        ],
+    },
+    {
+        question: "How are team updates and changes communicated?",
+        answers: [
+            `<strong>Email:</strong> you will be signed up for the email list when your athlete registers for the sport.`,
+            `<strong>sportsYou:</strong> after registering your athlete, sign up for <a href="${sportsYouSignupUrl}" ${newTab}>sportsYou</a>. After you have registered, you will receive a code to join your athlete's team, so you can stay connected and informed!`,
+            `<strong>Facebook:</strong> be sure to follow our <a href="${facebookUrl}" ${newTab}>team page</a> to see pictures of the team in action and get updates!`,
+            `<strong>Team Rep:</strong> during the season, your Northstars Team Rep is the key contact for all team information.`,
+        ],
+    },
+    ...extraFaqs,
+    {
+        question: "What are practices like?",
+        answers: [
+            `Practices focus mainly on skill building. The first practice is mostly an info session, where the head coach gives an overview of the season.`,
+            `Coaches work with every athlete at their own skill level. There is no pressure to win, and no experience is needed.`,
+            `<strong>Unified Partners</strong> are peers, such as siblings, friends, classmates, relatives and neighbors, who train and play alongside our athletes. We can always use more!`,
+        ],
+    },
+    {
+        question: "Are there competitions?",
+        answers: [
+            `Northstars teams take part in regional and state Special Olympics tournaments. The regional tournament is usually near the end of the season in the Kansas City area. Find tournament information at <a href="https://somo.org/" ${newTab}>somo.org</a>.`,
+            `If your athlete will not compete in tournaments, please let your coach know, since it affects tournament and team assignments.`,
+            `The NKC School District funds athletes who participate in Special Olympics. Any extra registration or travel fees for State Games are announced in advance. If you need help with costs, contact your coach right away.`,
+            ...(resourcesUrl
+                ? [`<a href="${resourcesUrl}" ${newTab}>Rules and resources for this sport</a> from Special Olympics Missouri.`]
+                : []),
+        ],
+    },
+];
+---
+
+<Layout title={`${name} | Northstars Booster Club`}>
+    <!-- Realistic moving space background (src/components/SpaceBackdrop.astro) -->
+    <SpaceBackdrop />
+
+    <!-- Hero: this sport's photo, name and tagline -->
+    <header
+        class="hero"
+        style={`height: 60vh; background-image: linear-gradient(rgba(0, 45, 86, 0.6), rgba(0, 45, 86, 0.4)), url(${optimizedHero.src});`}
+    >
+        <h1>{name}</h1>
+        <p>{tagline}</p>
+    </header>
+
+    <!-- Yellow bar: season, sportsYou, cost -->
+    <div class="stats-bar sport-stats">
+        <div class="stat-item">
+            <h2>{season}</h2>
+            <p>Season</p>
+        </div>
+        <div class="stat-item">
+            <a href={sportsYouLoginUrl} target="_blank" rel="noopener noreferrer">
+                <Image
+                    src={sportsYouLogo}
+                    alt="sportsYou: log in to see the practice location"
+                />
+            </a>
+            <p>Information</p>
+        </div>
+        {
+            cost && (
+                <div class="stat-item">
+                    <h2>{cost.value}</h2>
+                    <p>{cost.label}</p>
+                </div>
+            )
+        }
+    </div>
+
+    <!-- Everything below the yellow bar: sponsor page look -->
+    <div class="sport-content">
+        <div class="sport-container">
+            <!-- Two info cards -->
+            <section class="sport-grid">
+                <div class="package-card">
+                    <div class="card-header">
+                        <span class="tier-badge">{scheduleBadge}</span>
+                        <h3 class="tier-title">Practice Schedule</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="perks-list">
+                            {
+                                schedule.map((line) => (
+                                    <li>
+                                        <span class="check-icon">✓</span>
+                                        <span><strong>{line.detail ? `${line.label}:` : line.label}</strong>{line.detail ? ` ${line.detail}` : ""}</span>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                        <p class="card-note">*Check{" "}<a href={sportsYouLoginUrl} target="_blank" rel="noopener noreferrer">sportsYou</a>{" "}{scheduleNote}</p>
+                    </div>
+                </div>
+
+                <div class="package-card">
+                    <div class="card-header">
+                        <span class="tier-badge">{needsBadge}</span>
+                        <h3 class="tier-title">What You Need</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="perks-list">
+                            {
+                                needs.map((item) => (
+                                    <li>
+                                        <span class="check-icon">✓</span>
+                                        <span>{item}</span>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ accordion: click a question to open its answer.
+                 The first question starts open. -->
+            <section class="faq-card">
+                <div class="faq-header">
+                    <span class="tier-badge">Good to Know</span>
+                    <h2 class="faq-title">Common Questions</h2>
+                </div>
+
+                {
+                    faqs.map((faq, index) => (
+                        <details class="faq-item" open={index === 0}>
+                            <summary class="faq-question">{faq.question}</summary>
+                            <ul class="faq-answer">
+                                {faq.answers.map((answer) => (
+                                    <li set:html={answer} />
+                                ))}
+                            </ul>
+                        </details>
+                    ))
+                }
+            </section>
+
+            <!-- Register call to action -->
+            <section class="custom-donate-card">
+                <div class="custom-content">
+                    <span class="custom-badge">Join the Team</span>
+                    <h2 class="custom-title">{registerLine}</h2>
+                    <a
+                        href={registerUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="custom-btn">{registerButton}</a
+                    >
+                    <p class="custom-help">Questions about {name.toLowerCase()}?{" "}<a href={contactUrl}>Contact us</a></p>
+                </div>
+            </section>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    /* 1. SPACE BACKGROUND: now the SpaceBackdrop component
+       (src/components/SpaceBackdrop.astro). Its styles live there. */
+
+    /* =============================================
+       1b. YELLOW BAR
+       The bar itself is styled in global.css (.stats-bar, .stat-item).
+       These rules size the sportsYou logo and keep the three items
+       from running off the screen on phones.
+       ============================================= */
+    .sport-stats {
+        align-items: center;
+    }
+
+    /* :global() is needed because the <img> is created by Astro's Image component */
+    .sport-stats :global(img) {
+        height: 48px;
+        width: auto;
+        display: block;
+    }
+
+    @media (max-width: 600px) {
+        .sport-stats {
+            padding: 12px 10px;
+            gap: 10px;
+        }
+
+        .sport-stats .stat-item h2 {
+            font-size: 1.05rem;
+            white-space: nowrap;
+        }
+
+        .sport-stats .stat-item p {
+            font-size: 0.62rem;
+        }
+
+        .sport-stats :global(img) {
+            height: 24px;
+        }
+    }
+
+    /* =============================================
+       2. SPORT CONTENT LAYOUT
+       New, modeled on .sponsor-content / .sponsor-container
+       ============================================= */
+    .sport-content {
+        padding: 60px 20px 100px;
+    }
+
+    .sport-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .sport-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+        align-items: stretch;
+    }
+
+    /* =============================================
+       3. GLASS CARDS
+       Copied from sponsor.astro (.package-card family)
+       ============================================= */
+    .package-card {
+        background: linear-gradient(135deg, rgba(16, 28, 60, 0.75) 0%, rgba(8, 14, 32, 0.9) 100%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition:
+            transform 0.35s ease,
+            border-color 0.35s ease,
+            box-shadow 0.35s ease;
+    }
+
+    .package-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--accent-yellow);
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.8),
+            0 0 25px rgba(255, 205, 0, 0.25);
+    }
+
+    .card-header {
+        padding: 30px 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.25);
+    }
+
+    .tier-badge {
+        display: inline-block;
+        background: rgba(255, 205, 0, 0.15);
+        border: 1px solid var(--accent-yellow);
+        color: var(--accent-yellow);
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 4px 14px;
+        border-radius: 50px;
+        margin-bottom: 12px;
+    }
+
+    .tier-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 0;
+        letter-spacing: 0.5px;
+        text-transform: none;
+    }
+
+    .card-body {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .perks-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        flex: 1;
+    }
+
+    .perks-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.5;
+    }
+
+    .check-icon {
+        color: var(--accent-yellow);
+        font-weight: 900;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    /* New: small italic footnote inside a card */
+    .card-note {
+        margin: 20px 0 0 0;
+        font-size: 0.9rem;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    .card-note a {
+        color: var(--accent-yellow);
+        font-weight: 700;
+        text-decoration: underline;
+        transition: color 0.2s ease;
+    }
+
+    .card-note a:hover {
+        color: #ffffff;
+    }
+
+    /* =============================================
+       4. FAQ ACCORDION
+       New. Built on the browser's own <details> element,
+       so it opens and closes with no JavaScript.
+       ============================================= */
+    .faq-card {
+        padding: 40px 45px;
+        background: linear-gradient(135deg, rgba(16, 28, 60, 0.75) 0%, rgba(8, 14, 32, 0.9) 100%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .faq-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .faq-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin: 0;
+        text-transform: none;
+    }
+
+    /* One question + answer */
+    .faq-item {
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .faq-item:last-child {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* The clickable question row */
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 4px;
+        cursor: pointer;
+        list-style: none;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #ffffff;
+        transition: color 0.2s ease;
+    }
+
+    /* Hide the browser's default triangle */
+    .faq-question::-webkit-details-marker {
+        display: none;
+    }
+
+    /* Our own "+" on the right, which turns into an "x" when open */
+    .faq-question::after {
+        content: "+";
+        color: var(--accent-yellow);
+        font-size: 1.6rem;
+        font-weight: 700;
+        line-height: 1;
+        flex-shrink: 0;
+        transition: transform 0.25s ease;
+    }
+
+    .faq-item[open] .faq-question::after {
+        transform: rotate(45deg);
+    }
+
+    .faq-question:hover,
+    .faq-item[open] .faq-question {
+        color: var(--accent-yellow);
+    }
+
+    .faq-question:focus-visible {
+        outline: 2px solid var(--accent-yellow);
+        outline-offset: 2px;
+        border-radius: 6px;
+    }
+
+    /* The answer bullets */
+    .faq-answer {
+        list-style: none;
+        padding: 0 4px 22px 4px;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .faq-answer li {
+        position: relative;
+        padding-left: 22px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .faq-answer li::before {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 0.6em;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent-yellow);
+    }
+
+    /* :global() is needed here because the answers arrive as text from each
+       sport page, so their links are not written directly in this file. */
+    .faq-answer :global(a) {
+        color: var(--accent-yellow);
+        font-weight: 700;
+        text-decoration: underline;
+        transition: color 0.2s ease;
+    }
+
+    .faq-answer :global(a:hover) {
+        color: #ffffff;
+    }
+
+    /* =============================================
+       5. CALL TO ACTION CARD
+       Copied from sponsor.astro (.custom-donate-card family)
+       ============================================= */
+    .custom-donate-card {
+        padding: 45px;
+        background: linear-gradient(135deg, rgba(20, 45, 90, 0.8) 0%, rgba(10, 20, 45, 0.95) 100%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 24px;
+        border: 2px solid var(--accent-yellow);
+        box-shadow:
+            0 15px 45px rgba(0, 0, 0, 0.75),
+            0 0 25px rgba(255, 205, 0, 0.2);
+        text-align: center;
+    }
+
+    .custom-content {
+        max-width: 820px;
+        margin: 0 auto;
+    }
+
+    .custom-badge {
+        display: inline-block;
+        background: var(--accent-yellow);
+        color: var(--midnight-navy);
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 4px 14px;
+        border-radius: 50px;
+        margin-bottom: 12px;
+    }
+
+    .custom-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 25px;
+    }
+
+    .custom-btn {
+        display: inline-block;
+        background-image:
+            var(--star-pattern),
+            linear-gradient(135deg, rgba(20, 35, 75, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+        background-color: var(--midnight-navy);
+        color: var(--white);
+        font-family: "Montserrat", sans-serif;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none !important;
+        border-radius: 50px;
+        padding: 16px 36px;
+        border: 2px solid var(--accent-yellow);
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.4),
+            0 0 15px rgba(255, 205, 0, 0.25);
+        transition: all 0.3s ease;
+    }
+
+    .custom-btn:hover {
+        background-image: none;
+        background-color: var(--accent-yellow);
+        color: var(--midnight-navy);
+        border-color: var(--accent-yellow);
+        box-shadow: 0 0 28px rgba(255, 205, 0, 0.7);
+        transform: translateY(-3px);
+    }
+
+    /* New: small "Questions?" line under the Register button */
+    .custom-help {
+        margin: 26px 0 0 0;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    .custom-help a {
+        color: var(--accent-yellow);
+        font-weight: 700;
+        text-decoration: underline;
+        transition: color 0.2s ease;
+    }
+
+    .custom-help a:hover {
+        color: #ffffff;
+    }
+
+    /* =============================================
+       6. RESPONSIVE MOBILE
+       ============================================= */
+    @media (max-width: 768px) {
+        .sport-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .custom-donate-card,
+        .faq-card {
+            padding: 26px 20px;
+        }
+
+        .faq-title {
+            font-size: 1.6rem;
+        }
+
+        .custom-title {
+            font-size: 1.6rem;
+        }
+    }
+</style>

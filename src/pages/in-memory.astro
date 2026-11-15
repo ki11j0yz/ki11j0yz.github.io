@@ -1,6 +1,7 @@
 ---
 // src/pages/in-memory.astro
 import Layout from '../layouts/Layout.astro';
+import SpaceBackdrop from '../components/SpaceBackdrop.astro';
 import { Image } from 'astro:assets';
 
 // 1. Import all 4 memorial photos from src/assets/images/
@@ -55,8 +56,8 @@ const memorials = [
 ---
 
 <Layout title="In Memory | Northstars Booster Club">
-  <!-- 1. Truly Static, Seamless Full-Screen Background -->
-  <div class="fixed-backdrop" aria-hidden="true"></div>
+  <!-- Realistic moving space background (src/components/SpaceBackdrop.astro) -->
+  <SpaceBackdrop />
 
   <!-- Hero Header -->
   <header class="memory-hero">
@@ -114,24 +115,8 @@ const memorials = [
 </Layout>
 
 <style>
-  /* --- 1. FIXED, SEAMLESS OBSIDIAN BACKDROP --- */
-  .fixed-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    pointer-events: none;
-    background-color: #080d16;
-    background-image: 
-      radial-gradient(ellipse at 50% 15%, rgba(0, 45, 86, 0.45) 0%, transparent 65%),
-      radial-gradient(circle at 85% 75%, rgba(15, 30, 60, 0.35) 0%, transparent 50%),
-      radial-gradient(circle at 15% 85%, rgba(20, 35, 75, 0.3) 0%, transparent 50%),
-      linear-gradient(180deg, #0a111c 0%, #05080e 100%);
-    background-size: cover;
-    background-position: center;
-  }
+  /* 1. SPACE BACKGROUND: now the SpaceBackdrop component
+     (src/components/SpaceBackdrop.astro). Its styles live there. */
 
   /* --- 2. HERO HEADER --- */
   .memory-hero {

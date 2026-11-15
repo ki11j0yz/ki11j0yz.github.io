@@ -1,0 +1,29 @@
+---
+// src/pages/bocce-ball.astro
+// Everything on this page comes from the shared template in
+// src/layouts/SportLayout.astro. This file only holds this sport's details.
+import SportLayout from "../layouts/SportLayout.astro";
+import hero from "../assets/images/bocce_hero.png";
+
+const sport = {
+    slug: "bocce-ball",
+    name: "Bocce Ball",
+    tagline: "Aim, roll and cheer each other on.",
+    season: "Jul - Oct",
+
+    // Practice Schedule card
+    scheduleBadge: "When We Play",
+    schedule: [{ label: "Mondays & Wednesdays", detail: "6:30 PM - 7:30 PM" }],
+
+    // What You Need card
+    needs: ["A water bottle", "A positive Northstar attitude!"],
+
+    resourcesUrl: "https://somo.org/bocce/",
+
+    // Register card
+    registerLine: "Ready to roll?",
+    registerButton: "Register to Play",
+};
+---
+
+<SportLayout {...sport} hero={hero} />

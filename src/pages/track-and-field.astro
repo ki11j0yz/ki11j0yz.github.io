@@ -1,0 +1,44 @@
+---
+// src/pages/track-and-field.astro
+// Everything on this page comes from the shared template in
+// src/layouts/SportLayout.astro. This file only holds this sport's details.
+import SportLayout from "../layouts/SportLayout.astro";
+import hero from "../assets/images/track_hero.png";
+
+const sport = {
+    slug: "track-and-field",
+    name: "Track & Field",
+    tagline: "Running, jumping and throwing toward personal bests.",
+    season: "Mar - May",
+
+    // Practice Schedule card
+    scheduleBadge: "When We Train",
+    schedule: [{ label: "Mondays & Wednesdays", detail: "5:00 PM - 6:15 PM" }],
+
+    // What You Need card
+    needs: ["A water bottle", "A positive Northstar attitude!"],
+
+    // A question only Track & Field has
+    extraFaqs: [
+        {
+            question: "What events are there?",
+            answers: [
+                "<strong>Runs:</strong> 100, 200, 400 and 800 meters.",
+                "<strong>Distance:</strong> 1500, 3000, 5000 and 10,000 meters.",
+                "<strong>Relays</strong>",
+                "<strong>Jumps:</strong> long jump and standing jump.",
+                "<strong>Throws:</strong> shot put and mini javelin (weights vary by age and gender).",
+                "<strong>Wheelchair races:</strong> 100, 200 and 400 meters.",
+            ],
+        },
+    ],
+
+    resourcesUrl: "https://somo.org/athletics/",
+
+    // Register card
+    registerLine: "Ready, set, go?",
+    registerButton: "Register for Track",
+};
+---
+
+<SportLayout {...sport} hero={hero} />

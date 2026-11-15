@@ -1,0 +1,34 @@
+---
+// src/pages/softball.astro
+// Everything on this page comes from the shared template in
+// src/layouts/SportLayout.astro. This file only holds this sport's details.
+import SportLayout from "../layouts/SportLayout.astro";
+import hero from "../assets/images/softball_hero.png";
+
+const sport = {
+    slug: "softball",
+    name: "Softball",
+    tagline: "Summer Saturdays on the diamond.",
+    season: "Jun - Oct",
+
+    // Practice Schedule card
+    scheduleBadge: "When We Play",
+    schedule: [{ label: "Saturday Mornings", detail: "9:00 AM - 10:30 AM" }],
+
+    // What You Need card
+    needs: [
+        "Your own glove (for hygiene reasons)",
+        "A water bottle",
+        "Sunscreen",
+        "A positive Northstar attitude!",
+    ],
+
+    resourcesUrl: "https://somo.org/softball/",
+
+    // Register card
+    registerLine: "Ready to play ball?",
+    registerButton: "Register to Play",
+};
+---
+
+<SportLayout {...sport} hero={hero} />

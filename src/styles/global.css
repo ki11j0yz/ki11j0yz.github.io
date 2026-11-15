@@ -511,6 +511,9 @@ footer a:hover {
     padding: 10px;
     margin-left: 20px;
     z-index: 1002;
+    /* It is a <button> now, so clear the browser's default button look */
+    background: transparent;
+    border: 0;
 }
 
 .mobile-menu-toggle span {
@@ -521,8 +524,40 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
+    /* The menu button: always on screen, with a finger-sized tap area */
     .mobile-menu-toggle {
         display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        margin-left: 8px;
+        gap: 5px;
+    }
+
+    .mobile-menu-toggle span {
+        width: 24px;
+    }
+
+    /* The logo and club name shrink to fit, so they can never push
+       the menu button off the edge of the screen. */
+    .brand-container {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .logo-img {
+        height: 38px;
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
+
+    .brand-logo-text {
+        font-size: clamp(0.6rem, 3.1vw, 0.99rem);
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .nav-wrapper {
@@ -536,8 +571,8 @@ footer a:hover {
     nav {
         width: 100%;
         justify-content: space-between;
-        padding: 0 20px;
-        height: 50px;
+        padding: 0 8px 0 16px;
+        height: 54px;
     }
 
     .nav-links-container {
@@ -549,9 +584,13 @@ footer a:hover {
         background-color: var(--starry-bg);
         background-image: var(--star-pattern);
         border-radius: 20px;
-        padding: 25px;
+        padding: 14px 20px;
         margin-left: 0;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+        /* If the open menu is taller than the screen, it scrolls inside itself */
+        max-height: calc(100vh - 95px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
     }
 
     .nav-links-container.active {
@@ -560,9 +599,10 @@ footer a:hover {
 
     .nav-links {
         flex-direction: column;
-        gap: 10px;
+        gap: 0;
         align-items: stretch;
         /* CHANGED from flex-start */
+        margin: 0;
     }
 
     .nav-item {
@@ -571,10 +611,27 @@ footer a:hover {
         /* CHANGED from flex */
     }
 
+    /* Top-level items: bigger text, taller rows, and a + / - on the right
+       to show that tapping opens a list. */
     .nav-item>a {
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
-        padding: 6px 0;
+        padding: 13px 0;
+        font-size: 1rem;
+    }
+
+    .nav-item>a::after {
+        content: "+";
+        color: var(--accent-yellow);
+        font-size: 1.4rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .nav-item.active>a::after {
+        content: "\2212";
     }
 
     .dropdown {
@@ -588,8 +645,9 @@ footer a:hover {
         background: rgba(255, 255, 255, 0.05);
         border: none;
         border-left: 3px solid var(--accent-yellow);
-        padding: 10px 0 10px 20px;
-        margin: 5px 0 10px 10px;
+        padding: 4px 0 4px 18px;
+        margin: 0 0 10px 6px;
+        gap: 0;
         min-width: unset;
         width: calc(100% - 10px);
         flex-direction: column;
@@ -604,10 +662,12 @@ footer a:hover {
         visibility: visible !important;
     }
 
+    /* Links inside an open list: readable size, finger-sized rows */
     .dropdown a {
         color: white !important;
         border-bottom: none !important;
-        padding: 4px 0;
+        font-size: 0.92rem !important;
+        padding: 11px 0;
         width: 100%;
         opacity: 1 !important;
         visibility: visible !important;

@@ -1,0 +1,419 @@
+---
+// src/pages/join.astro
+// One page that replaces the old "Become an Athlete" and "Join The Club" links.
+import Layout from "../layouts/Layout.astro";
+import SpaceBackdrop from "../components/SpaceBackdrop.astro";
+
+// The three outside links, each defined once so they are easy to change later
+const somoUrl = "https://form.jotform.com/SpecialOlympicsMO/Athleteregistration";
+const newNorthstarFormUrl = "https://forms.gle/jKSMDfiv1QVmPqUY6";
+const membershipUrl = "https://my.cheddarup.com/c/annual-family-booster-club-membership-58325/items";
+---
+
+<Layout title="Join Northstars | Northstars Booster Club">
+	<!-- Realistic moving space background (src/components/SpaceBackdrop.astro) -->
+	<SpaceBackdrop />
+
+	<!-- Hero Header -->
+	<header class="jn-hero">
+		<h1>JOIN NORTHSTARS</h1>
+		<p>New athletes and families start here. Register your athlete, tell us who is joining, and become a Booster Club member.</p>
+		<a href={membershipUrl} target="_blank" rel="noopener noreferrer" class="jn-renew">Already a member? Renew here →</a>
+	</header>
+
+	<main class="jn-content">
+		<div class="jn-container">
+			<!-- Section 1: New athletes, two steps -->
+			<section>
+				<h2 class="jn-heading">For New Athletes</h2>
+				<div class="jn-steps-grid">
+					<div class="jn-card jn-glass">
+						<div class="jn-card-header">
+							<span class="jn-badge">Step 1</span>
+							<h3 class="jn-card-title">Register with Special Olympics Missouri</h3>
+						</div>
+						<div class="jn-card-body">
+							<p class="jn-card-text">Register your athlete with Special Olympics Missouri (SOMO). This is the official athlete registration.</p>
+							<a href={somoUrl} target="_blank" rel="noopener noreferrer" class="jn-btn">Register Your Athlete</a>
+						</div>
+					</div>
+
+					<div class="jn-card jn-glass">
+						<div class="jn-card-header">
+							<span class="jn-badge">Step 2</span>
+							<h3 class="jn-card-title">Tell Us About Your Athlete</h3>
+						</div>
+						<div class="jn-card-body">
+							<p class="jn-card-text">Fill out the New Northstar Information form so we know who is joining and how to reach you.</p>
+							<a href={newNorthstarFormUrl} target="_blank" rel="noopener noreferrer" class="jn-btn">New Northstar Form</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 2: Families, Booster Club membership -->
+			<section>
+				<h2 class="jn-heading">For Families</h2>
+				<div class="jn-member-card">
+					<span class="jn-member-badge">Booster Club Membership</span>
+					<h3 class="jn-member-title">Join the Club</h3>
+					<div class="jn-price">$30</div>
+					<p class="jn-price-note">per family, per year</p>
+					<p class="jn-member-text">Become a member to directly support our missions and events.</p>
+					<a href={membershipUrl} target="_blank" rel="noopener noreferrer" class="jn-member-btn">Pay Membership (with CheddarUp)</a>
+				</div>
+			</section>
+
+			<!-- Questions line -->
+			<p class="jn-help">Questions about joining?{" "}<a href="/connect-with-us">Contact us</a></p>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	/* Every class below starts with "jn-" (join page) so it can never
+	   collide with rules in your global stylesheet. */
+
+	/* 1. SPACE BACKGROUND: now the SpaceBackdrop component
+	   (src/components/SpaceBackdrop.astro). Its styles live there. */
+
+	/* =============================================
+	   2. HERO HEADER
+	   Modeled on .sponsor-hero (words sit directly on the starfield)
+	   ============================================= */
+	.jn-hero {
+		min-height: 340px;
+		height: 46vh;
+		background: transparent;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		color: #ffffff;
+		padding: 0 10%;
+	}
+
+	.jn-hero h1 {
+		font-size: 3.2rem;
+		letter-spacing: 2px;
+		margin: 0 0 15px 0;
+		color: #ffffff;
+		text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
+	}
+
+	.jn-hero p {
+		font-size: 1.15rem;
+		max-width: 800px;
+		margin: 0;
+		color: rgba(255, 255, 255, 0.92);
+		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+		line-height: 1.6;
+	}
+
+	/* "Already a member? Renew here" shortcut for returning families */
+	.jn-renew {
+		margin-top: 24px;
+		display: inline-block;
+		font-family: "Montserrat", sans-serif;
+		font-size: 0.85rem;
+		font-weight: 800;
+		letter-spacing: 0.04em;
+		color: var(--accent-yellow);
+		text-decoration: none;
+		padding: 8px 20px;
+		border: 1px solid rgba(255, 205, 0, 0.6);
+		border-radius: 50px;
+		background: rgba(255, 205, 0, 0.1);
+		transition: all 0.3s ease;
+	}
+
+	.jn-renew:hover {
+		background: var(--accent-yellow);
+		color: var(--midnight-navy);
+	}
+
+	/* =============================================
+	   3. CONTENT LAYOUT + SHARED PIECES
+	   ============================================= */
+	.jn-content {
+		padding: 10px 20px 100px;
+	}
+
+	.jn-container {
+		max-width: 1000px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 70px;
+	}
+
+	.jn-heading {
+		text-align: center;
+		font-family: "Montserrat", sans-serif;
+		font-size: 2.2rem;
+		font-weight: 800;
+		color: #ffffff;
+		text-shadow: 0 0 12px rgba(0, 0, 0, 0.85);
+		margin: 0 0 35px 0;
+		letter-spacing: 1px;
+		text-transform: none;
+	}
+
+	/* The glass card look (same recipe as .package-card on the sponsor page) */
+	.jn-glass {
+		background: linear-gradient(135deg, rgba(16, 28, 60, 0.75) 0%, rgba(8, 14, 32, 0.9) 100%);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border-radius: 24px;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+	}
+
+	/* Yellow pill badge (same as .tier-badge on the sponsor page) */
+	.jn-badge {
+		display: inline-block;
+		background: rgba(255, 205, 0, 0.15);
+		border: 1px solid var(--accent-yellow);
+		color: var(--accent-yellow);
+		font-family: "Montserrat", sans-serif;
+		font-size: 0.75rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		padding: 4px 14px;
+		border-radius: 50px;
+		margin-bottom: 12px;
+	}
+
+	/* =============================================
+	   4. STEP CARDS (For New Athletes)
+	   ============================================= */
+	.jn-steps-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 30px;
+		align-items: stretch;
+	}
+
+	.jn-card {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		transition:
+			transform 0.35s ease,
+			border-color 0.35s ease,
+			box-shadow 0.35s ease;
+	}
+
+	.jn-card:hover {
+		transform: translateY(-8px);
+		border-color: var(--accent-yellow);
+		box-shadow:
+			0 20px 50px rgba(0, 0, 0, 0.8),
+			0 0 25px rgba(255, 205, 0, 0.25);
+	}
+
+	.jn-card-header {
+		padding: 30px 26px 22px;
+		text-align: center;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(0, 0, 0, 0.25);
+	}
+
+	.jn-card-title {
+		font-family: "Montserrat", sans-serif;
+		font-size: 1.5rem;
+		font-weight: 800;
+		line-height: 1.25;
+		color: #ffffff;
+		margin: 0;
+		letter-spacing: 0.5px;
+		text-transform: none;
+	}
+
+	.jn-card-body {
+		padding: 28px 26px 30px;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+
+	.jn-card-text {
+		font-size: 1rem;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.9);
+		margin: 0 0 26px 0;
+		text-align: center;
+		flex: 1;
+	}
+
+	/* Button (same as .tier-btn on the sponsor page) */
+	.jn-btn {
+		width: 100%;
+		display: block;
+		text-align: center;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1.5px solid rgba(255, 205, 0, 0.6);
+		color: #ffffff;
+		font-family: "Montserrat", sans-serif;
+		font-size: 0.9rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		text-decoration: none !important;
+		padding: 14px 20px;
+		border-radius: 50px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.jn-btn:hover {
+		background: var(--accent-yellow);
+		color: var(--midnight-navy);
+		border-color: var(--accent-yellow);
+		box-shadow: 0 0 25px rgba(255, 205, 0, 0.6);
+	}
+
+	/* =============================================
+	   5. MEMBERSHIP CARD (For Families)
+	   Modeled on .custom-donate-card on the sponsor page
+	   ============================================= */
+	.jn-member-card {
+		padding: 45px;
+		background: linear-gradient(135deg, rgba(20, 45, 90, 0.8) 0%, rgba(10, 20, 45, 0.95) 100%);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border-radius: 24px;
+		border: 2px solid var(--accent-yellow);
+		box-shadow:
+			0 15px 45px rgba(0, 0, 0, 0.75),
+			0 0 25px rgba(255, 205, 0, 0.2);
+		text-align: center;
+	}
+
+	.jn-member-badge {
+		display: inline-block;
+		background: var(--accent-yellow);
+		color: var(--midnight-navy);
+		font-family: "Montserrat", sans-serif;
+		font-size: 0.75rem;
+		font-weight: 900;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		padding: 4px 14px;
+		border-radius: 50px;
+		margin-bottom: 12px;
+	}
+
+	.jn-member-title {
+		font-family: "Montserrat", sans-serif;
+		font-size: 2.2rem;
+		font-weight: 800;
+		color: #ffffff;
+		margin: 0 0 14px 0;
+		text-transform: none;
+	}
+
+	/* Big yellow price (same as .tier-price on the sponsor page) */
+	.jn-price {
+		font-family: "Montserrat", sans-serif;
+		font-size: 3.4rem;
+		font-weight: 900;
+		color: var(--accent-yellow);
+		text-shadow: 0 0 15px rgba(255, 205, 0, 0.4);
+		line-height: 1;
+	}
+
+	.jn-price-note {
+		font-size: 0.9rem;
+		color: rgba(255, 255, 255, 0.75);
+		margin: 8px 0 20px 0;
+	}
+
+	.jn-member-text {
+		font-size: 1.1rem;
+		line-height: 1.7;
+		color: rgba(255, 255, 255, 0.92);
+		max-width: 620px;
+		margin: 0 auto 28px auto;
+	}
+
+	/* Button (same as .custom-btn on the sponsor page) */
+	.jn-member-btn {
+		display: inline-block;
+		background-image:
+			var(--star-pattern),
+			linear-gradient(135deg, rgba(20, 35, 75, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+		background-color: var(--midnight-navy);
+		color: var(--white);
+		font-family: "Montserrat", sans-serif;
+		font-size: 13px;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-decoration: none !important;
+		border-radius: 50px;
+		padding: 16px 36px;
+		border: 2px solid var(--accent-yellow);
+		box-shadow:
+			0 4px 15px rgba(0, 0, 0, 0.4),
+			0 0 15px rgba(255, 205, 0, 0.25);
+		transition: all 0.3s ease;
+	}
+
+	.jn-member-btn:hover {
+		background-image: none;
+		background-color: var(--accent-yellow);
+		color: var(--midnight-navy);
+		border-color: var(--accent-yellow);
+		box-shadow: 0 0 28px rgba(255, 205, 0, 0.7);
+		transform: translateY(-3px);
+	}
+
+	/* =============================================
+	   6. QUESTIONS LINE
+	   ============================================= */
+	.jn-help {
+		text-align: center;
+		font-size: 0.95rem;
+		color: rgba(255, 255, 255, 0.75);
+		margin: -20px 0 0 0;
+	}
+
+	.jn-help a {
+		color: var(--accent-yellow);
+		font-weight: 700;
+		text-decoration: underline;
+		transition: color 0.2s ease;
+	}
+
+	.jn-help a:hover {
+		color: #ffffff;
+	}
+
+	/* =============================================
+	   7. RESPONSIVE MOBILE
+	   ============================================= */
+	@media (max-width: 768px) {
+		.jn-hero h1 {
+			font-size: 2.2rem;
+		}
+
+		.jn-heading {
+			font-size: 1.7rem;
+		}
+
+		.jn-steps-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.jn-member-card {
+			padding: 30px 20px;
+		}
+
+		.jn-member-title {
+			font-size: 1.7rem;
+		}
+	}
+</style>

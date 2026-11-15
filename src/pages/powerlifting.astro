@@ -1,0 +1,29 @@
+---
+// src/pages/powerlifting.astro
+// Everything on this page comes from the shared template in
+// src/layouts/SportLayout.astro. This file only holds this sport's details.
+import SportLayout from "../layouts/SportLayout.astro";
+import hero from "../assets/images/powerlifting_hero.png";
+
+const sport = {
+    slug: "powerlifting",
+    name: "Powerlifting",
+    tagline: "Building strength and confidence, one lift at a time.",
+    season: "Mar - Jun",
+
+    // Practice Schedule card
+    scheduleBadge: "When We Lift",
+    schedule: [{ label: "Mondays & Wednesdays", detail: "6:00 PM - 7:30 PM" }],
+
+    // What You Need card
+    needs: ["A water bottle", "A powerlifting singlet or undershirt", "A positive Northstar attitude!"],
+
+    resourcesUrl: "https://somo.org/powerlifting/",
+
+    // Register card
+    registerLine: "Ready to lift?",
+    registerButton: "Register to Lift",
+};
+---
+
+<SportLayout {...sport} hero={hero} />

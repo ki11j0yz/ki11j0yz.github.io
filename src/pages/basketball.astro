@@ -1,0 +1,33 @@
+---
+// src/pages/basketball.astro
+// Everything on this page comes from the shared template in
+// src/layouts/SportLayout.astro. This file only holds this sport's details.
+import SportLayout from "../layouts/SportLayout.astro";
+import hero from "../assets/images/basketball_hero.png";
+
+const sport = {
+    slug: "basketball",
+    name: "Basketball",
+    tagline: "Teamwork, hustle and Saturday mornings on the court.",
+    season: "Nov - Mar",
+
+    // Practice Schedule card
+    scheduleBadge: "When We Play",
+    schedule: [
+        { label: "Saturday Mornings" },
+        { label: "Half-court teams", detail: "10:00 AM - 10:45 AM" },
+        { label: "Full-court teams", detail: "10:45 AM - 12:00 PM" },
+    ],
+
+    // What You Need card
+    needs: ["A water bottle", "A positive Northstar attitude!"],
+
+    resourcesUrl: "https://somo.org/basketball/",
+
+    // Register card
+    registerLine: "Ready to hit the court?",
+    registerButton: "Register to Play",
+};
+---
+
+<SportLayout {...sport} hero={hero} />
