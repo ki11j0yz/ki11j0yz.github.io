@@ -34,7 +34,7 @@ const roles = [
     title: 'Team Representative',
     tag: 'Coordination & Communication',
     image: teamRepImg,
-    imgPosition: 'center top',
+    imgPosition: 'center 30%',
     description: 'Keep the team connected! Help coaches communicate schedule updates, coordinate snacks, greet families at practice, and ensure everything runs smoothly.',
     highlights: ['Liaison between families & coaches', 'Help manage attendance & gear', 'Great role for parents and supporters']
   },
@@ -565,6 +565,13 @@ const roles = [
   }
 
   @media (max-width: 768px) {
+    /* Phones: let the hero grow with its text and start below the fixed nav */
+    .vol-hero {
+      height: auto;
+      min-height: 300px;
+      padding: 105px 6% 30px;
+    }
+
     .vol-hero h1 {
       font-size: 2.3rem;
     }

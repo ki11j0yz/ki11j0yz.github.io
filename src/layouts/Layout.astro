@@ -48,9 +48,31 @@ const { title } = Astro.props;
                 );
                 const navItems = document.querySelectorAll(".nav-item");
 
+                // 0. Measure the links' real width so the slide animates to it
+                const measureLinks = () => {
+                    if (navWrapper && navLinksContainer) {
+                        navWrapper.style.setProperty(
+                            "--links-w",
+                            navLinksContainer.scrollWidth + "px",
+                        );
+                        const brandText = navWrapper.querySelector(".brand-logo-text");
+                        if (brandText) {
+                            navWrapper.style.setProperty(
+                                "--brand-w",
+                                brandText.scrollWidth + "px",
+                            );
+                        }
+                    }
+                };
+                measureLinks();
+                document.fonts?.ready.then(measureLinks);
+                window.addEventListener("resize", measureLinks);
+
                 // 1. Desktop Scroll Effect
                 window.addEventListener("scroll", function () {
                     if (window.innerWidth > 768) {
+                        // lets the bubble trail animation play from now on
+                        navWrapper?.classList.add("nav-ready");
                         if (window.scrollY > 60) {
                             navWrapper?.classList.add("scrolled");
                         } else {

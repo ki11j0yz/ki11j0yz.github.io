@@ -89,6 +89,9 @@ nav {
     display: flex;
     align-items: center;
     margin-left: 40px;
+    /* --links-w = the links' real width, measured in Layout.astro.
+       Animating to the real width (not 1200px) keeps the slide smooth. */
+    max-width: var(--links-w, 1200px);
     transition: var(--smooth);
 }
 
@@ -166,11 +169,144 @@ nav {
 }
 
 .nav-wrapper.scrolled:hover .nav-links-container {
-    max-width: 1200px;
+    max-width: var(--links-w, 1200px);
     opacity: 1;
     margin-left: 40px;
     pointer-events: auto;
     overflow: visible;
+}
+
+/* --- DESKTOP CONDENSED BUBBLE ---
+   When scrolled, the pill shrinks to a round logo bubble.
+   Hovering it opens the full nav again. Desktop only, so the
+   phone nav is untouched. --brand-w is measured in Layout.astro. */
+@media (min-width: 769px) {
+    .brand-logo-text {
+        max-width: var(--brand-w, 300px);
+        overflow: hidden;
+        transition: var(--smooth);
+    }
+
+    .logo-img {
+        transition: var(--smooth);
+    }
+
+    .nav-wrapper.scrolled nav {
+        padding: 0 6px;
+    }
+
+    /* The logo file has empty space on its sides; the negative
+       margins trim it so the bubble comes out round */
+    .nav-wrapper.scrolled .logo-img {
+        height: 44px;
+        margin: 0 -8px;
+    }
+
+    .nav-wrapper.scrolled .brand-logo-text {
+        max-width: 0;
+        opacity: 0;
+    }
+
+    .nav-wrapper.scrolled:hover nav {
+        padding: 0 30px;
+    }
+
+    .nav-wrapper.scrolled:hover .logo-img {
+        height: 48px;
+        margin: 0 12px 0 0;
+    }
+
+    .nav-wrapper.scrolled:hover .brand-logo-text {
+        max-width: var(--brand-w, 300px);
+        opacity: 1;
+    }
+}
+
+/* --- SOCIAL BUBBLES (trail the nav pill) --- */
+.nav-socials {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 14px;
+    display: flex;
+    gap: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.nav-social {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    border: 1px solid rgba(255, 205, 0, 0.35);
+    box-shadow: 0 0 14px rgba(255, 205, 0, 0.18), 0 6px 18px rgba(0, 0, 0, 0.45);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.nav-social svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-social.fb { background: #1877f2; }
+.nav-social.x { background: #000000; }
+
+.nav-social:hover,
+.nav-social:focus-visible {
+    transform: scale(1.12);
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 18px rgba(255, 205, 0, 0.45), 0 6px 18px rgba(0, 0, 0, 0.45);
+    outline: none;
+}
+
+/* The "jovial" trail: bubbles lag behind the pill, then spring into place.
+   nav-ready is added on the first scroll so nothing plays on page load. */
+.nav-wrapper.nav-ready.scrolled .nav-socials .nav-social {
+    animation: trail-left 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.nav-wrapper.nav-ready:not(.scrolled) .nav-socials .nav-social {
+    animation: trail-right 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.nav-socials .nav-social:nth-child(2) {
+    animation-delay: 0.08s !important;
+}
+
+@keyframes trail-left {
+    0% { translate: 0 0; }
+    35% { translate: 26px -3px; }
+    100% { translate: 0 0; }
+}
+
+@keyframes trail-right {
+    0% { translate: 0 0; }
+    35% { translate: -26px -3px; }
+    100% { translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-wrapper .nav-socials .nav-social {
+        animation: none !important;
+    }
+}
+
+/* Narrow laptops: no room beside the full-width nav, so the bubbles
+   appear once the nav condenses to the corner */
+@media (max-width: 960px) {
+    .nav-wrapper:not(.scrolled) .nav-socials {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+/* The phone-only "Follow us" row is hidden on desktop */
+.nav-follow-row {
+    display: none;
 }
 
 /* --- HERO --- */
@@ -586,6 +722,7 @@ footer a:hover {
         border-radius: 20px;
         padding: 14px 20px;
         margin-left: 0;
+        max-width: none;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
         /* If the open menu is taller than the screen, it scrolls inside itself */
         max-height: calc(100vh - 95px);
@@ -595,6 +732,28 @@ footer a:hover {
 
     .nav-links-container.active {
         display: block;
+    }
+
+    .nav-socials {
+        display: none;
+    }
+
+    .nav-follow-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 12px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    .nav-follow-row span {
+        margin-right: auto;
     }
 
     .nav-links {

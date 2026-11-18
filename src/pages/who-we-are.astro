@@ -28,8 +28,7 @@ const sportsSupports = [
     {
         sport: "Track",
         people: [
-            { name: "Phil Hawthorne", emoji: "👨🏻" }, // Black (Man)
-            { name: "Tiffany Hawthorne", emoji: "👱‍♀️" }, // Blonde (Woman)
+            { name: "Chriss Duda‑Wolf", emoji: "👱‍♀️" }, // Blonde (Woman)
         ],
     },
     {
@@ -480,7 +479,7 @@ const sportsSupports = [
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 10px;
+        margin: 0 auto 10px;
         transition:
             transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
             box-shadow 0.3s ease,
@@ -685,6 +684,13 @@ const sportsSupports = [
      6. RESPONSIVE MOBILE
      ============================================= */
     @media (max-width: 768px) {
+        /* Phones: let the hero grow with its text and start below the fixed nav */
+        .about-hero {
+            height: auto;
+            min-height: 300px;
+            padding: 105px 6% 30px;
+        }
+
         .about-hero h1 {
             font-size: 2.3rem;
         }

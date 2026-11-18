@@ -57,7 +57,7 @@ import SpaceBackdrop from "../components/SpaceBackdrop.astro";
 
                     <!-- X / Twitter -->
                     <a
-                        href="https://twitter.com/NorthstarsBC"
+                        href="https://x.com/NKCSDNorthstars"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="big-social-badge x-badge"
@@ -506,6 +506,13 @@ import SpaceBackdrop from "../components/SpaceBackdrop.astro";
      6. RESPONSIVE MOBILE
      ============================================= */
     @media (max-width: 768px) {
+        /* Phones: let the hero grow with its text and start below the fixed nav */
+        .connect-hero {
+            height: auto;
+            min-height: 300px;
+            padding: 105px 6% 30px;
+        }
+
         .connect-hero h1 {
             font-size: 2.4rem;
         }
