@@ -1,0 +1,399 @@
+---
+// src/components/ContactModal.astro
+// A "Contact us" popup that any page can open.
+//
+// HOW TO USE: give any link these two attributes:
+//   <a href="/connect-with-us" data-contact data-topic="Bowling">contact us</a>
+// - data-contact  -> clicking opens this popup instead of following the link
+// - data-topic    -> fills in the "Topic" box (optional)
+// The href still works as a backup if JavaScript is off.
+//
+// SENDING: there is no form service connected yet, so "Send" opens the
+// visitor's email app with everything they typed already filled in,
+// addressed to the club. To send from the page itself later, connect a
+// form service (e.g. Formspree) and swap the submit code below.
+const clubEmail = "northstarsbooster@gmail.com";
+---
+
+<div
+    id="contactModal"
+    class="cm-overlay"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cmTitle"
+    data-email={clubEmail}
+>
+    <div class="cm-card">
+        <button type="button" class="cm-close" aria-label="Close">&times;</button>
+
+        <div class="cm-header">
+            <span class="cm-badge">Get In Touch</span>
+            <h2 id="cmTitle" class="cm-title">Questions? We're Here to Help</h2>
+            <p class="cm-subtitle">Send us a note and a Northstars volunteer will get back to you.</p>
+        </div>
+
+        <form class="cm-form" novalidate>
+            <div class="cm-row">
+                <div class="cm-field">
+                    <label for="cmName">Your Name <span class="cm-req">*</span></label>
+                    <input type="text" id="cmName" name="name" required autocomplete="name" />
+                </div>
+                <div class="cm-field">
+                    <label for="cmEmail">Email Address <span class="cm-req">*</span></label>
+                    <input type="email" id="cmEmail" name="email" required autocomplete="email" placeholder="you@example.com" />
+                </div>
+            </div>
+
+            <div class="cm-row">
+                <div class="cm-field">
+                    <label for="cmPhone">Phone <span class="cm-optional">(optional)</span></label>
+                    <input type="tel" id="cmPhone" name="phone" autocomplete="tel" placeholder="(816) 000-0000" />
+                </div>
+                <div class="cm-field">
+                    <label for="cmTopic">Topic</label>
+                    <input type="text" id="cmTopic" name="topic" placeholder="e.g. Bowling" />
+                </div>
+            </div>
+
+            <div class="cm-field">
+                <label for="cmMessage">Your Question <span class="cm-req">*</span></label>
+                <textarea id="cmMessage" name="message" rows="4" required></textarea>
+            </div>
+
+            <p class="cm-error" role="alert" hidden>Please fill in your name, a valid email and your question.</p>
+
+            <button type="submit" class="cm-submit">Send Message</button>
+            <p class="cm-note">Clicking Send opens your email app with your message ready. Just press send.</p>
+        </form>
+
+        <div class="cm-done" hidden>
+            <h3>Almost done!</h3>
+            <p>
+                Your email app should now be open with your message filled in. Press
+                <strong>send</strong> there and we'll get back to you soon.
+            </p>
+            <p class="cm-fallback">
+                Didn't open? Email us directly at
+                <a href={`mailto:${clubEmail}`}>{clubEmail}</a>
+            </p>
+            <button type="button" class="cm-submit cm-done-close">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // One set of listeners for the whole visit (pages swap without a reload),
+    // so this guard stops them being added again on every page change.
+    const w = window as any;
+    if (!w.__contactModalReady) {
+        w.__contactModalReady = true;
+
+        const modal = () => document.getElementById("contactModal");
+
+        function open(topic: string) {
+            const m = modal();
+            if (!m) return;
+            const form = m.querySelector("form") as HTMLFormElement;
+            form.reset();
+            form.hidden = false;
+            (m.querySelector(".cm-done") as HTMLElement).hidden = true;
+            (m.querySelector(".cm-error") as HTMLElement).hidden = true;
+            (m.querySelector("#cmTopic") as HTMLInputElement).value = topic;
+            m.classList.add("active");
+            m.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            setTimeout(() => (m.querySelector("#cmName") as HTMLInputElement)?.focus(), 50);
+        }
+
+        function close() {
+            const m = modal();
+            if (!m) return;
+            m.classList.remove("active");
+            m.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        }
+
+        document.addEventListener("click", (e) => {
+            const t = e.target as HTMLElement;
+
+            // Any link marked data-contact opens the popup
+            const trigger = t.closest("[data-contact]") as HTMLElement | null;
+            if (trigger && modal()) {
+                e.preventDefault();
+                open(trigger.dataset.topic || "");
+                return;
+            }
+
+            // Close: the X, the Close button, or a click outside the card
+            const m = modal();
+            if (!m || !m.classList.contains("active")) return;
+            if (t === m || t.closest(".cm-close") || t.closest(".cm-done-close")) close();
+        }, true); // "true" = run before the page-change router grabs the click
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal()?.classList.contains("active")) close();
+        });
+
+        document.addEventListener("submit", (e) => {
+            const form = e.target as HTMLFormElement;
+            if (!form.classList.contains("cm-form")) return;
+            e.preventDefault();
+
+            const val = (id: string) => (form.querySelector(id) as HTMLInputElement).value.trim();
+            const name = val("#cmName");
+            const email = val("#cmEmail");
+            const phone = val("#cmPhone");
+            const topic = val("#cmTopic");
+            const message = val("#cmMessage");
+            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+            const err = form.querySelector(".cm-error") as HTMLElement;
+            if (!name || !emailOk || !message) {
+                err.hidden = false;
+                return;
+            }
+            err.hidden = true;
+
+            const to = modal()?.dataset.email || "";
+            const subject = `Website question${topic ? ": " + topic : ""}`;
+            const body =
+                `Name: ${name}\nEmail: ${email}\n` +
+                (phone ? `Phone: ${phone}\n` : "") +
+                (topic ? `Topic: ${topic}\n` : "") +
+                `\n${message}\n`;
+
+            window.location.href =
+                `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            form.hidden = true;
+            (modal()?.querySelector(".cm-done") as HTMLElement).hidden = false;
+        }, true); // run before the page-change router, which also watches forms
+    }
+</script>
+
+<style>
+    .cm-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(3, 6, 18, 0.75);
+        backdrop-filter: blur(6px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .cm-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .cm-card {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        padding: 36px 34px 30px;
+        border-radius: 22px;
+        background: linear-gradient(160deg, rgba(20, 30, 62, 0.97), rgba(8, 12, 30, 0.98));
+        border: 1px solid rgba(255, 205, 0, 0.35);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 205, 0, 0.12);
+        color: #ffffff;
+        transform: translateY(18px) scale(0.98);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cm-overlay.active .cm-card {
+        transform: none;
+    }
+
+    .cm-close {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 2rem;
+        line-height: 1;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    .cm-close:hover {
+        color: var(--accent-yellow, #ffcd00);
+    }
+
+    .cm-header {
+        text-align: center;
+        margin-bottom: 22px;
+    }
+
+    .cm-badge {
+        display: inline-block;
+        padding: 5px 14px;
+        border-radius: 50px;
+        border: 1px solid var(--accent-yellow, #ffcd00);
+        color: var(--accent-yellow, #ffcd00);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .cm-title {
+        margin: 14px 0 8px;
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+        color: #ffffff;
+    }
+
+    .cm-subtitle {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.98rem;
+    }
+
+    .cm-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+
+    .cm-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 14px;
+    }
+
+    .cm-field label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .cm-req {
+        color: var(--accent-yellow, #ffcd00);
+    }
+
+    .cm-optional {
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.55);
+    }
+
+    .cm-field input,
+    .cm-field textarea {
+        width: 100%;
+        padding: 11px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffffff;
+        font: inherit;
+        font-size: 0.95rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cm-field textarea {
+        resize: vertical;
+    }
+
+    .cm-field input::placeholder,
+    .cm-field textarea::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .cm-field input:focus,
+    .cm-field textarea:focus {
+        outline: none;
+        border-color: var(--accent-yellow, #ffcd00);
+        box-shadow: 0 0 0 3px rgba(255, 205, 0, 0.18);
+    }
+
+    .cm-error {
+        margin: 0 0 12px;
+        color: #ff8a8a;
+        font-size: 0.9rem;
+    }
+
+    .cm-submit {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 50px;
+        background: var(--accent-yellow, #ffcd00);
+        color: #0a1128;
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cm-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(255, 205, 0, 0.35);
+    }
+
+    .cm-note {
+        margin: 12px 0 0;
+        text-align: center;
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .cm-done {
+        text-align: center;
+    }
+
+    .cm-done h3 {
+        margin: 0 0 10px;
+        font-size: 1.4rem;
+        color: var(--accent-yellow, #ffcd00);
+    }
+
+    .cm-done p {
+        color: rgba(255, 255, 255, 0.88);
+        line-height: 1.6;
+    }
+
+    .cm-fallback {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .cm-fallback a {
+        color: var(--accent-yellow, #ffcd00);
+    }
+
+    @media (max-width: 600px) {
+        .cm-card {
+            padding: 30px 20px 24px;
+        }
+
+        .cm-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .cm-title {
+            font-size: 1.3rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .cm-overlay,
+        .cm-card {
+            transition: none;
+        }
+    }
+</style>

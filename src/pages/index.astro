@@ -150,6 +150,10 @@ const supportCards = [
 						))
 					}
 				</div>
+				<p class="hp-donate">
+					Want to give in another way?{" "}
+					<a href="https://my.cheddarup.com/c/general-donation-82637/items" target="_blank" rel="noopener noreferrer">Make a donation of any amount</a>
+				</p>
 			</section>
 
 			<!-- Section 3: Inspire video -->
@@ -321,6 +325,22 @@ const supportCards = [
 		grid-template-columns: repeat(3, 1fr);
 		gap: 26px;
 		align-items: stretch;
+	}
+
+	.hp-donate {
+		margin: 26px 0 0;
+		text-align: center;
+		color: rgba(255, 255, 255, 0.85);
+		font-size: 1.05rem;
+	}
+
+	.hp-donate a {
+		color: var(--accent-yellow);
+		font-weight: 700;
+	}
+
+	.hp-donate a:hover {
+		text-decoration: underline;
 	}
 
 	.hp-support-card {

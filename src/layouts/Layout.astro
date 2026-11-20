@@ -2,6 +2,7 @@
 // src/layouts/Layout.astro
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
+import ContactModal from "../components/ContactModal.astro";
 import "../styles/global.css";
 
 // 1. Import ClientRouter
@@ -38,6 +39,9 @@ const { title } = Astro.props;
         </main>
 
         <Footer />
+
+        <!-- "Contact us" popup: any link with data-contact opens it -->
+        <ContactModal />
 
         <script>
             document.addEventListener("astro:page-load", () => {

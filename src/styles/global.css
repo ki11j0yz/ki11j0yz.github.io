@@ -168,7 +168,9 @@ nav {
     overflow: hidden;
 }
 
-.nav-wrapper.scrolled:hover .nav-links-container {
+/* Only hovering the pill itself opens it, so the social
+   bubbles beside it stay clickable */
+.nav-wrapper.scrolled:has(nav:hover) .nav-links-container {
     max-width: var(--links-w, 1200px);
     opacity: 1;
     margin-left: 40px;
@@ -207,16 +209,16 @@ nav {
         opacity: 0;
     }
 
-    .nav-wrapper.scrolled:hover nav {
+    .nav-wrapper.scrolled:has(nav:hover) nav {
         padding: 0 30px;
     }
 
-    .nav-wrapper.scrolled:hover .logo-img {
+    .nav-wrapper.scrolled:has(nav:hover) .logo-img {
         height: 48px;
         margin: 0 12px 0 0;
     }
 
-    .nav-wrapper.scrolled:hover .brand-logo-text {
+    .nav-wrapper.scrolled:has(nav:hover) .brand-logo-text {
         max-width: var(--brand-w, 300px);
         opacity: 1;
     }

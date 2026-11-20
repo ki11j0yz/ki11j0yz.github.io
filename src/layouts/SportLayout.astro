@@ -92,7 +92,7 @@ const faqs: Faq[] = [
         question: "How do I register?",
         answers: [
             `Head <a href="${registerUrl}" ${newTab}>here</a> to register your athlete!`,
-            `New and have questions first? <a href="${contactUrl}">Contact us</a> and we will help you get started.`,
+            `New and have questions first? <a href="${contactUrl}" data-contact data-topic="${name}">Contact us</a> and we will help you get started.`,
         ],
     },
     {
@@ -250,7 +250,7 @@ const faqs: Faq[] = [
                         rel="noopener noreferrer"
                         class="custom-btn">{registerButton}</a
                     >
-                    <p class="custom-help">Questions about {name.toLowerCase()}?{" "}<a href={contactUrl}>Contact us</a></p>
+                    <p class="custom-help">Questions about {name.toLowerCase()}?{" "}<a href={contactUrl} data-contact data-topic={name}>Contact us</a></p>
                 </div>
             </section>
         </div>
